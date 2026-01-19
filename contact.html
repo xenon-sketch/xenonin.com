@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Xenon Industry</title>
+    <link rel="stylesheet" href="modern-enhancements.css" />
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Vanilla Tilt for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <link rel="icon" type="image/png" href="assets/Xenon Industries Logo.png" />
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="preloader-logo-img" />
+            </div>
+            <div class="preloader-progress">
+                <div class="preloader-bar">
+                    <div class="preloader-bar-inner" id="preloaderBar"></div>
+                </div>
+                <span class="preloader-percent" id="preloaderPercent">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-modern scrolled" id="navModern">
+        <div class="nav-container-modern">
+            <a href="index.html" class="nav-logo-modern" style="opacity: 1; transform: translateY(0)">
+                <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="nav-logo-img" />
+            </a>
+
+            <ul class="nav-menu-modern" id="navMenu">
+                <li>
+                    <a href="index.html" class="nav-link-modern" data-text="Home">Home</a>
+                </li>
+                <li>
+                    <a href="about.html" class="nav-link-modern" data-text="About">About</a>
+                </li>
+                <li>
+                    <a href="features.html" class="nav-link-modern" data-text="Features">Features</a>
+                </li>
+                <li>
+                    <a href="manga-series.html" class="nav-link-modern" data-text="Manga">Manga</a>
+                </li>
+                <li>
+                    <a href="contact.html" class="nav-link-modern active" data-text="Contact">Contact</a>
+                </li>
+            </ul>
+
+            <button class="nav-toggle-modern" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content page-content">
+        <!-- Page Header -->
+        <section class="page-hero">
+            <div class="page-hero-bg"></div>
+            <div class="page-hero-content">
+                <span class="section-eyebrow reveal-up">Reach Out</span>
+                <h1 class="page-hero-title reveal-up">
+                    Get in <span>Touch</span>
+                </h1>
+                <p class="page-hero-subtitle reveal-up">
+                    We'd love to hear from you
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section-modern">
+            <div class="contact-grid">
+                <div class="contact-info-modern reveal-up">
+                    <h2>Contact Information</h2>
+
+                    <div class="contact-item">
+                        <h4>Email</h4>
+                        <p>
+                            <a href="mailto:mail.xenon.in@gmail.com">mail.xenon.in@gmail.com</a>
+                        </p>
+                    </div>
+
+                    <div class="contact-item">
+                        <h4>Phone</h4>
+                        <p>
+                            <a href="tel:+8801603304833">+880 1603 304 833</a>
+                        </p>
+                    </div>
+
+                    <div class="contact-item">
+                        <h4>Address</h4>
+                        <p>FabLab DIU, Birulia, Savar, Dhaka</p>
+                    </div>
+
+                    <div class="contact-item">
+                        <h4>Business Hours</h4>
+                        <p>
+                            Monday - Friday: 9:00 AM - 6:00 PM<br />Saturday
+                            - Sunday: Closed
+                        </p>
+                    </div>
+
+                    <div class="contact-socials">
+                        <a href="#" class="contact-social-link" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/share/1K1A88vVYV/" class="contact-social-link"
+                            aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/xenon.industries?igsh=eHNpa3p0OHRrMHV2"
+                            class="contact-social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@xenon.industries?si=d-1CiAnx4o9iCYqd" class="contact-social-link"
+                            aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form-modern reveal-up">
+                    <form id="contactForm">
+                        <div class="form-group-modern">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name" />
+                        </div>
+                        <div class="form-group-modern">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com" />
+                        </div>
+                        <div class="form-group-modern">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="How can we help?" />
+                        </div>
+                        <div class="form-group-modern">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required
+                                placeholder="Your message..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn-modern">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="footer-bg-shapes">
+            <div class="footer-shape footer-shape-1"></div>
+            <div class="footer-shape footer-shape-2"></div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="footer-logo-img" />
+                    <p>
+                        Xenon Industries builds future-ready robotics products
+                        focused on education, creativity and human technology
+                        collaboration
+                    </p>
+                    <div class="footer-socials">
+                        <a href="#" class="footer-social-link" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/share/1K1A88vVYV/" class="footer-social-link"
+                            aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/xenon.industries?igsh=eHNpa3p0OHRrMHV2"
+                            class="footer-social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@xenon.industries?si=d-1CiAnx4o9iCYqd" class="footer-social-link"
+                            aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/gHCmJMsRWZAqbAQs9">Starter Pack</a></li>
+                        <li><a href="https://forms.gle/owb5F4uxxm4AvbCLA">Pro Suite</a></li>
+                        <li><a href="https://forms.gle/BhL6BKfpDQj2xFmr8">Collector Edition</a></li>
+                        <li><a href="pico-z-detail.html">Pico Z</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="privacy-policy.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Preloader
+            const preloader = document.getElementById("preloader");
+            const preloaderBar = document.getElementById("preloaderBar");
+            const preloaderPercent =
+                document.getElementById("preloaderPercent");
+            let progress = 0;
+
+            const preloaderInterval = setInterval(() => {
+                progress += Math.random() * 20;
+                if (progress > 100) progress = 100;
+
+                preloaderBar.style.width = progress + "%";
+                preloaderPercent.textContent = Math.floor(progress) + "%";
+
+                if (progress >= 100) {
+                    clearInterval(preloaderInterval);
+                    setTimeout(() => {
+                        preloader.classList.add("hidden");
+                        document.body.style.overflow = "";
+                        initAnimations();
+                    }, 400);
+                }
+            }, 80);
+
+            document.body.style.overflow = "hidden";
+
+            // Navigation
+            const navToggle = document.getElementById("navToggle");
+            const navMenu = document.getElementById("navMenu");
+
+            navToggle.addEventListener("click", () => {
+                navToggle.classList.toggle("active");
+                navMenu.classList.toggle("active");
+                document.body.style.overflow = navMenu.classList.contains(
+                    "active",
+                )
+                    ? "hidden"
+                    : "";
+            });
+
+            document
+                .querySelectorAll(".nav-link-modern")
+                .forEach((link) => {
+                    link.addEventListener("click", () => {
+                        navToggle.classList.remove("active");
+                        navMenu.classList.remove("active");
+                        document.body.style.overflow = "";
+                    });
+                });
+
+            // Scroll Progress
+            const scrollProgress =
+                document.getElementById("scrollProgress");
+            window.addEventListener("scroll", () => {
+                const scrollTop = window.scrollY;
+                const docHeight =
+                    document.documentElement.scrollHeight -
+                    window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                scrollProgress.style.width = scrollPercent + "%";
+            });
+
+            // Back to Top
+            const backToTop = document.getElementById("backToTop");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 500) {
+                    backToTop.classList.add("visible");
+                } else {
+                    backToTop.classList.remove("visible");
+                }
+            });
+
+            backToTop.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            // Contact Form
+            const contactForm = document.getElementById("contactForm");
+            if (contactForm) {
+                contactForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    alert(
+                        "Thank you for your message! We will get back to you soon.",
+                    );
+                    contactForm.reset();
+                });
+            }
+
+            // Initialize Animations
+            function initAnimations() {
+                if (
+                    typeof gsap !== "undefined" &&
+                    typeof ScrollTrigger !== "undefined"
+                ) {
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    gsap.utils.toArray(".reveal-up").forEach((elem) => {
+                        gsap.fromTo(
+                            elem,
+                            { y: 60, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 1,
+                                ease: "power3.out",
+                                scrollTrigger: {
+                                    trigger: elem,
+                                    start: "top 85%",
+                                    toggleActions: "play none none none",
+                                },
+                            },
+                        );
+                    });
+                }
+
+                if (typeof VanillaTilt !== "undefined") {
+                    VanillaTilt.init(
+                        document.querySelectorAll("[data-tilt]"),
+                        {
+                            max: 8,
+                            speed: 400,
+                            glare: true,
+                            "max-glare": 0.15,
+                        },
+                    );
+                }
+            }
+        });
+    </script>
+    <script src="js/security.js"></script>
+</body>
+
+</html>

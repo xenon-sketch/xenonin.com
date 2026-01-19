@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Terms - Xenon Industry</title>
+    <link rel="stylesheet" href="modern-enhancements.css">
+    <link rel="icon" type="image/png" href="assets/Xenon Industries Logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --paper-bg: #fffef0;
+            --paper-line: #e5e5e5;
+            --paper-blue: #a5c7fe;
+            --paper-red: #ffadad;
+            --ink-color: #2c3e50;
+        }
+
+        body {
+            background-color: #111;
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+            color: var(--ink-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .back-btn-container {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+
+        .notepad-paper {
+            background-color: var(--paper-bg);
+            width: 100%;
+            max-width: 800px;
+            min-height: 1000px;
+            padding: 60px 40px 60px 80px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            background-image:
+                linear-gradient(var(--paper-blue) 1px, transparent 1px);
+            background-size: 100% 1.6rem;
+            line-height: 1.6rem;
+            border-radius: 4px;
+        }
+
+        .notepad-paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50px;
+            width: 2px;
+            height: 100%;
+            background-color: var(--paper-red);
+        }
+
+        .notepad-content {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Caveat', cursive;
+            color: #111;
+            margin-top: 1.6rem;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-decoration: underline;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid #555;
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.6rem;
+        }
+
+        ul {
+            margin-bottom: 1.6rem;
+            padding-left: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+            list-style-type: square;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .effective-date {
+            font-style: italic;
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .warranty-card {
+            background: rgba(0, 0, 0, 0.03);
+            border-left: 4px solid var(--paper-red);
+            padding: 10px 20px;
+            margin: 20px 0;
+        }
+
+        .contact-info-block {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--paper-line);
+        }
+
+        /* Handwritten annotations effect */
+        .handwritten {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: #003366;
+            transform: rotate(-1deg);
+            display: inline-block;
+        }
+
+        @media (max-width: 600px) {
+            .notepad-paper {
+                padding: 40px 20px 40px 50px;
+            }
+
+            .notepad-paper::before {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="back-btn-container">
+        <a href="index.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+        </a>
+    </div>
+
+    <article class="notepad-paper">
+        <div class="notepad-content">
+            <h1>Privacy Policy</h1>
+            <p class="effective-date">Effective Date: 18-01-2026</p>
+
+            <p>Xenon Industries respects your privacy. This Privacy Policy explains how we collect, use, and protect
+                your information when you purchase or use PikoBot.</p>
+
+            <h2>1. Information We Collect</h2>
+            <p>We may collect the following information:</p>
+            <ul>
+                <li>Full name</li>
+                <li>Phone number</li>
+                <li>Email address</li>
+                <li>Shipping address</li>
+                <li>Order and payment details</li>
+            </ul>
+
+            <h2>2. How We Use Your Information</h2>
+            <p>Your information is used to:</p>
+            <ul>
+                <li>Process and deliver your order</li>
+                <li>Contact you regarding your purchase or warranty</li>
+                <li>Provide customer support</li>
+                <li>Improve our products and services</li>
+            </ul>
+            <p><span class="handwritten">Note: We do not sell, trade, or share your personal information with third
+                    parties, except delivery partners when required for shipping.</span></p>
+
+            <h2>3. Data Protection</h2>
+            <p>We take reasonable steps to protect your personal data from unauthorized access, misuse, or disclosure.
+            </p>
+
+            <h2>4. Your Consent</h2>
+            <p>By placing an order for PikoBot, you agree to this Privacy Policy.</p>
+
+            <div style="margin-top: 80px; border-bottom: 2px solid var(--paper-line);"></div>
+
+            <h1>Terms & Conditions</h1>
+            <h3 class="handwritten">PikoBot Edition</h3>
+
+            <p>By purchasing or using PikoBot, you agree to the following terms and conditions.</p>
+
+            <h2>1. Product Use</h2>
+            <ul>
+                <li>PikoBot is an educational robotics product.</li>
+                <li>Adult supervision is recommended for children.</li>
+                <li>Xenon Industries is not responsible for misuse, unsafe handling, or unauthorized modifications.</li>
+            </ul>
+
+            <h2>2. Warranty Policy</h2>
+            <p>PikoBot comes with a <strong>6-month limited warranty</strong> from the date of delivery. Warranty covers
+                manufacturing defects and functional issues under normal use.</p>
+
+            <div class="warranty-card">
+                <h3>❌ Warranty Does NOT Cover:</h3>
+                <ul>
+                    <li>Physical damage (breakage, cracks, burns, water damage)</li>
+                    <li>Damage caused by dropping, mishandling, or accidents</li>
+                    <li>Damage due to unauthorized repair or modification</li>
+                    <li>Power issues caused by wrong adapters or voltage</li>
+                    <li>Normal wear and tear</li>
+                </ul>
+                <p><strong>Important:</strong> Any physically damaged product will not be eligible for free repair or
+                    replacement.</p>
+            </div>
+
+            <h2>3. Repair & Replacement</h2>
+            <ul>
+                <li>If a valid warranty issue is confirmed, we may repair or replace the product at our discretion.</li>
+                <li>Customers may be responsible for shipping costs during warranty claims.</li>
+            </ul>
+
+            <h2>4. Returns & Refunds</h2>
+            <ul>
+                <li>No refunds after delivery unless the product is dead on arrival (DOA).</li>
+                <li>Issues must be reported within 48 hours of receiving the product.</li>
+                <li>Returned products must be in original condition.</li>
+            </ul>
+
+            <h2>5. Cash on Delivery (COD)</h2>
+            <ul>
+                <li>Orders placed with Cash on Delivery must be accepted at delivery.</li>
+                <li>Refusal without valid reason may result in future order restrictions.</li>
+            </ul>
+
+            <h2>6. Limitation of Liability</h2>
+            <p>Xenon Industries is not liable for:</p>
+            <ul>
+                <li>Indirect or accidental damages</li>
+                <li>Loss caused by misuse or improper handling</li>
+                <li>Any damage beyond the product’s purchase value</li>
+            </ul>
+
+            <h2>7. Changes to Terms</h2>
+            <p>We reserve the right to update these policies at any time without prior notice.</p>
+
+            <div class="contact-info-block">
+                <h2>8. Contact Us</h2>
+                <p>For support or warranty claims:</p>
+                <p>📧 Email: <a href="mailto:mail.xenon.in@gmail.com">mail.xenon.in@gmail.com</a></p>
+                <p>📞 Phone: <a href="tel:+8801603304833">+8801603304833</a></p>
+            </div>
+        </div>
+    </article>
+
+    <footer style="margin-top: 40px; color: rgba(255,255,255,0.4); font-size: 0.8rem;">
+        &copy; 2026 Xenon Industries. All Rights Reserved.
+    </footer>
+
+    <script src="js/security.js"></script>
+</body>
+
+</html>

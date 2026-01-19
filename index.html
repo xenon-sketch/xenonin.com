@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xenon Industry | PikoBot - Your Desk Companion</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Google Fonts - Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Vanilla Tilt for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    <!-- Three.js for WebGL 3D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/text-reveal.js"></script>
+    <script src="js/video-autoplay.js"></script>
+    <link rel="stylesheet" href="modern-enhancements.css" />
+    <link rel="icon" type="image/png" href="assets/Xenon Industries Logo.png" />
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">
+                <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="preloader-logo-img" />
+            </div>
+            <div class="preloader-progress">
+                <div class="preloader-bar">
+                    <div class="preloader-bar-inner" id="preloaderBar"></div>
+                </div>
+                <span class="preloader-percent" id="preloaderPercent">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-modern" id="navModern">
+        <div class="nav-container-modern">
+            <a href="index.html" class="nav-logo-modern">
+                <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="nav-logo-img" />
+            </a>
+
+            <ul class="nav-menu-modern" id="navMenu">
+                <li>
+                    <a href="index.html" class="nav-link-modern active" data-text="Home">Home</a>
+                </li>
+                <li>
+                    <a href="about.html" class="nav-link-modern" data-text="About">About</a>
+                </li>
+                <li>
+                    <a href="features.html" class="nav-link-modern" data-text="Features">Features</a>
+                </li>
+                <li>
+                    <a href="manga-series.html" class="nav-link-modern" data-text="Manga">Manga</a>
+                </li>
+                <li>
+                    <a href="contact.html" class="nav-link-modern" data-text="Contact">Contact</a>
+                </li>
+            </ul>
+
+            <button class="nav-toggle-modern" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-header">
+        <img src="assets/header bg.png" alt="Header background" class="hero-image" />
+
+        <!-- Xenon Industries Logo - Top Left -->
+        <div class="hero-brand-logo">
+            <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="hero-brand-image" />
+        </div>
+
+        <!-- Speech Bubble - positioned to the right of PikoBot -->
+        <div class="speech-bubble" id="speechBubble">
+            <div class="speech-tail"></div>
+            <div class="speech-bubble-inner">
+                <span class="message-line-1">Hi ! I'm</span>
+                <span class="message-line-2" id="messageText" data-reveal="blur-word">PikoBot</span>
+            </div>
+        </div>
+
+        <!-- Mouse Scroll Indicator - Desktop Only -->
+        <div class="scroll-mouse" id="scrollMouse">
+            <div class="scroll-mouse-body">
+                <div class="scroll-mouse-wheel"></div>
+            </div>
+            <div class="scroll-mouse-arrows">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee Section -->
+    <section class="marquee-section">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span class="marquee-item">DESK COMPANION</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">FOCUS TIMER</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">EMOTIONAL AI</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">PRIVACY FIRST</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">DESK COMPANION</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">FOCUS TIMER</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">EMOTIONAL AI</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">PRIVACY FIRST</span>
+                <span class="marquee-divider"></span>
+            </div>
+            <div class="marquee-content">
+                <span class="marquee-item">DESK COMPANION</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">FOCUS TIMER</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">EMOTIONAL AI</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">PRIVACY FIRST</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">DESK COMPANION</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">FOCUS TIMER</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">EMOTIONAL AI</span>
+                <span class="marquee-divider"></span>
+                <span class="marquee-item">PRIVACY FIRST</span>
+                <span class="marquee-divider"></span>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <!-- Products Section -->
+        <section class="products-section" id="productsSection">
+            <div class="section-title-wrapper reveal-up">
+                <span class="section-eyebrow">Our Products</span>
+                <h2 class="section-title-modern">
+                    Choose Your <span data-reveal="blur-word">PikoBot</span>
+                </h2>
+            </div>
+
+            <div class="bento-grid">
+                <article class="bento-card" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare
+                    data-tilt-max-glare="0.2">
+                    <div class="bento-card-shine"></div>
+                    <div class="bento-card-glow"></div>
+                    <div class="bento-media">
+                        <img src="assets/card-1.png" alt="Starter Pack" class="bento-image" />
+                    </div>
+                    <div class="bento-content">
+                        <span class="bento-tag">Standard</span>
+                        <h3 class="bento-title">PikoBot Transparent</h3>
+                        <p class="bento-text">
+                            2000 Taka
+                        </p>
+                        <button class="btn-buy magnetic-btn"
+                            onclick="window.location.href='https://forms.gle/gHCmJMsRWZAqbAQs9'">
+                            <span>Buy now</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="bento-card bento-card--featured" data-tilt data-tilt-max="8" data-tilt-speed="400"
+                    data-tilt-glare data-tilt-max-glare="0.3">
+                    <div class="bento-card-shine"></div>
+                    <div class="bento-card-glow"></div>
+                    <div class="featured-badge">
+                        <span>Most Popular</span>
+                    </div>
+                    <div class="bento-media">
+                        <img src="assets/card-2.png" alt="Pro Suite" class="bento-image" />
+                    </div>
+                    <div class="bento-content">
+                        <span class="bento-tag">Advanced</span>
+                        <h3 class="bento-title">PikoBot Classic</h3>
+                        <p class="bento-text">
+                            1900 Taka
+                        </p>
+                        <button class="btn-buy btn-buy--primary magnetic-btn"
+                            onclick="window.location.href='https://forms.gle/owb5F4uxxm4AvbCLA'">
+                            <span>Buy now</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <article class="bento-card" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare
+                    data-tilt-max-glare="0.2">
+                    <div class="bento-card-shine"></div>
+                    <div class="bento-card-glow"></div>
+                    <div class="bento-media">
+                        <img src="assets/card-3.png" alt="Collector Edition" class="bento-image" />
+                    </div>
+                    <div class="bento-content">
+                        <span class="bento-tag">Limited</span>
+                        <h3 class="bento-title">PikoBot B&W</h3>
+                        <p class="bento-text">
+                            1900 Taka
+                        </p>
+                        <button class="btn-buy magnetic-btn"
+                            onclick="window.location.href='https://forms.gle/BhL6BKfpDQj2xFmr8'">
+                            <span>Buy now</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery-section" id="gallerySection">
+            <div class="section-title-wrapper reveal-up">
+                <span class="section-eyebrow">Gallery</span>
+                <h2 class="section-title-modern">
+                    Explore Our <span data-reveal="blur-word">Collection</span>
+                </h2>
+            </div>
+
+            <div class="gallery-collage">
+                <div class="gallery-card gallery-card--1" data-tilt data-tilt-max="10">
+                    <img src="assets/gallery-1.png" alt="Gallery item 1" class="gallery-image" />
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">PikoBot Classic</span>
+                    </div>
+                </div>
+                <div class="gallery-card gallery-card--2" data-tilt data-tilt-max="10">
+                    <img src="assets/gallery-2.png" alt="Gallery item 2" class="gallery-image" />
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Expression Mode</span>
+                    </div>
+                </div>
+                <div class="gallery-card gallery-card--3" data-tilt data-tilt-max="10">
+                    <img src="assets/gallery-3.png" alt="Gallery item 3" class="gallery-image" />
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Focus Timer</span>
+                    </div>
+                </div>
+                <div class="gallery-card gallery-card--4" data-tilt data-tilt-max="10">
+                    <img src="assets/gallery-4.png" alt="Gallery item 4" class="gallery-image" />
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Night Mode</span>
+                    </div>
+                </div>
+                <div class="gallery-card gallery-card--5" data-tilt data-tilt-max="10">
+                    <img src="assets/gallery-5.png" alt="Gallery item 5" class="gallery-image" />
+                    <div class="gallery-overlay">
+                        <span class="gallery-label">Companion Mode</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Pico Z Section -->
+        <section class="picoz-section" id="picozSection">
+            <div class="picoz-bg-shapes">
+                <div class="picoz-shape picoz-shape-1"></div>
+                <div class="picoz-shape picoz-shape-2"></div>
+                <div class="picoz-shape picoz-shape-3"></div>
+            </div>
+
+            <div class="picoz-container">
+                <div class="picoz-content">
+                    <div class="picoz-badge">
+                        <span class="picoz-badge-dot"></span>
+                        <span>Coming Soon</span>
+                    </div>
+                    <h2 class="picoz-title reveal-up">
+                        The Next<br />
+                        <span data-reveal="blur-word">Generation</span>
+                    </h2>
+                    <p class="picoz-subtitle reveal-up">
+                        Piko Z is arriving with groundbreaking features that
+                        will revolutionize your desk experience.
+                    </p>
+                    <a href="pico-z-detail.html" class="picoz-link magnetic-btn">
+                        <span>Discover Piko Z</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="picoz-visual">
+                    <!-- WebGL 3D Canvas Container -->
+                    <div class="picoz-3d-container" id="picoz3DContainer">
+                        <canvas id="picoz3DCanvas"></canvas>
+
+                        <!-- Floating particles -->
+                        <div class="picoz-particles">
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                            <div class="picoz-particle"></div>
+                        </div>
+
+                        <!-- Energy ring -->
+                        <div class="picoz-energy-ring"></div>
+
+                        <!-- Holographic scanlines -->
+                        <div class="holo-scanlines"></div>
+
+                        <!-- Status indicator -->
+                        <div class="picoz-status">
+                            <div class="picoz-status-dot"></div>
+                            <span class="picoz-status-text">Initializing 3D View</span>
+                        </div>
+
+                        <!-- Fallback image for older browsers -->
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section class="liquid-reveal-section" id="videoSection">
+            <div class="video-reveal-container">
+                <div class="liquid-video-wrapper" id="homeVideoWrapper">
+                    <iframe class="youtube-video" id="homeYoutubeVideo" width="560" height="315"
+                        src="https://www.youtube.com/embed/6ndrZoAlMeg?autoplay=1&mute=1&controls=0&loop=1&playlist=6ndrZoAlMeg&enablejsapi=1&rel=0"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faqSection">
+            <div class="section-title-wrapper reveal-up">
+                <span class="section-eyebrow">Support</span>
+                <h2 class="section-title-modern">
+                    Frequently Asked <span data-reveal="blur-word">Questions</span>
+                </h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What exactly is Pikobot?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Pikobot is a small desk robot that shows
+                            emotions, displays short messages, and helps you
+                            stay focused using a Pomodoro timer. It's
+                            designed to be your calm, expressive desk
+                            companion.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is Pikobot a smart assistant?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            No. Pikobot does not listen to conversations or
+                            collect personal data. It is designed to be
+                            calm, expressive, and distraction-free. Your
+                            privacy is our priority.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How does the Pomodoro timer work?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Pikobot visually guides you through focus and
+                            break sessions. Just tap on its head for 3
+                            seconds and it will start. No loud alarms. No
+                            stress. Just gentle reminders.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Does Pikobot talk?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Pikobot does not use voice. It communicates
+                            through expressions and short on-screen
+                            messages, keeping your workspace calm and
+                            peaceful.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I use Pikobot all day?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Yes. Pikobot is designed for low power usage and
+                            continuous desk presence. It's built to be your
+                            all-day companion.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is Pikobot difficult to set up?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Not at all. Plug it in, place it on your desk,
+                            and it's ready. No complicated setup required.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Who is Pikobot for?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Anyone who studies, works or creates at a desk
+                            and wants a calmer, more human workspace.
+                            Students, professionals, and creators all love
+                            Pikobot.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Who makes Pikobot?</span>
+                        <div class="faq-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer">
+                        <p>
+                            Pikobot is designed and built by Xenon
+                            Industries, a Bangladeshi startup creating
+                            real-life robots inspired by science fiction.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="footer-bg-shapes">
+            <div class="footer-shape footer-shape-1"></div>
+            <div class="footer-shape footer-shape-2"></div>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="footer-logo-img" />
+                    <p>
+                        Xenon Industries builds future-ready robotics products
+                        focused on education, creativity and human technology
+                        collaboration
+                    </p>
+                    <div class="footer-socials">
+                        <a href="#" class="footer-social-link" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/share/1K1A88vVYV/" class="footer-social-link"
+                            aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/xenon.industries?igsh=eHNpa3p0OHRrMHV2"
+                            class="footer-social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@xenon.industries?si=d-1CiAnx4o9iCYqd" class="footer-social-link"
+                            aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="features.html">Features</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="https://forms.gle/gHCmJMsRWZAqbAQs9">Starter Pack</a></li>
+                        <li><a href="https://forms.gle/owb5F4uxxm4AvbCLA">Pro Suite</a></li>
+                        <li><a href="https://forms.gle/BhL6BKfpDQj2xFmr8">Collector Edition</a></li>
+                        <li><a href="pico-z-detail.html">Pico Z</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="privacy-policy.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        // ============================================
+        // XENON INDUSTRY - MODERN INTERACTIONS
+        // ============================================
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // ===== Preloader =====
+            const preloader = document.getElementById("preloader");
+            const preloaderBar = document.getElementById("preloaderBar");
+            const preloaderPercent =
+                document.getElementById("preloaderPercent");
+            let progress = 0;
+
+            const preloaderInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+
+                preloaderBar.style.width = progress + "%";
+                preloaderPercent.textContent = Math.floor(progress) + "%";
+
+                if (progress >= 100) {
+                    clearInterval(preloaderInterval);
+                    setTimeout(() => {
+                        preloader.classList.add("hidden");
+                        document.body.style.overflow = "";
+                        initAnimations();
+                    }, 500);
+                }
+            }, 100);
+
+            // Prevent scroll during preloader
+            document.body.style.overflow = "hidden";
+
+            // ===== Navigation =====
+            const navModern = document.getElementById("navModern");
+            const navToggle = document.getElementById("navToggle");
+            const navMenu = document.getElementById("navMenu");
+
+            // Scroll effect for nav
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 100) {
+                    navModern.classList.add("scrolled");
+                } else {
+                    navModern.classList.remove("scrolled");
+                }
+            });
+
+            // Mobile menu toggle
+            navToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navToggle.classList.toggle("active");
+                navMenu.classList.toggle("active");
+                document.body.style.overflow = navMenu.classList.contains(
+                    "active",
+                )
+                    ? "hidden"
+                    : "";
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener("click", (e) => {
+                if (
+                    navMenu.classList.contains("active") &&
+                    !navMenu.contains(e.target) &&
+                    !navToggle.contains(e.target)
+                ) {
+                    navToggle.classList.remove("active");
+                    navMenu.classList.remove("active");
+                    document.body.style.overflow = "";
+                }
+            });
+
+            // Close menu on escape key
+            document.addEventListener("keydown", (e) => {
+                if (
+                    e.key === "Escape" &&
+                    navMenu.classList.contains("active")
+                ) {
+                    navToggle.classList.remove("active");
+                    navMenu.classList.remove("active");
+                    document.body.style.overflow = "";
+                }
+            });
+
+            // Close menu on link click
+            document
+                .querySelectorAll(".nav-link-modern")
+                .forEach((link) => {
+                    link.addEventListener("click", () => {
+                        navToggle.classList.remove("active");
+                        navMenu.classList.remove("active");
+                        document.body.style.overflow = "";
+                    });
+                });
+
+            // ===== Scroll Progress =====
+            const scrollProgress =
+                document.getElementById("scrollProgress");
+            window.addEventListener("scroll", () => {
+                const scrollTop = window.scrollY;
+                const docHeight =
+                    document.documentElement.scrollHeight -
+                    window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                scrollProgress.style.width = scrollPercent + "%";
+            });
+
+            // ===== Back to Top Button =====
+            const backToTop = document.getElementById("backToTop");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 500) {
+                    backToTop.classList.add("visible");
+                } else {
+                    backToTop.classList.remove("visible");
+                }
+            });
+
+            backToTop.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            // ===== Speech Bubble Animation =====
+            const bubble = document.querySelector(".speech-bubble");
+            const messageText = document.getElementById("messageText");
+            const messageLine1 = document.querySelector(".message-line-1");
+
+            if (bubble && messageText) {
+                const messages = [
+                    { line1: "Hi ! I'm", line2: "PikoBot" },
+                    { line1: "I'm your", line2: "Companion" },
+                    { line1: "Let's stay", line2: "Focused!" },
+                    { line1: "Ready to", line2: "Work?" },
+                    { line1: "Break time", line2: "Soon?" },
+                    { line1: "You got", line2: "This! 🚀" },
+                    { line1: "Don't oil me w", line2: "sanda oil" },
+                ];
+
+                let currentIndex = 0;
+
+                // Change message with fade animation
+                const changeMessage = () => {
+                    bubble.classList.add("changing");
+
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % messages.length;
+                        messageLine1.textContent =
+                            messages[currentIndex].line1;
+                        messageText.textContent =
+                            messages[currentIndex].line2;
+                        bubble.classList.remove("changing");
+                    }, 300);
+                };
+
+                // Start message cycle
+                setInterval(changeMessage, 3500);
+
+                // Show bubble with entrance animation
+                setTimeout(() => {
+                    bubble.classList.add("visible");
+                }, 600);
+            }
+
+            // ===== Mouse Scroll Indicator =====
+            const scrollMouse = document.getElementById("scrollMouse");
+            if (scrollMouse) {
+                // Show after delay
+                setTimeout(() => {
+                    scrollMouse.classList.add("visible");
+                }, 1200);
+
+                // Hide on scroll
+                window.addEventListener(
+                    "scroll",
+                    () => {
+                        if (window.scrollY > 100) {
+                            scrollMouse.classList.add("hidden");
+                        } else {
+                            scrollMouse.classList.remove("hidden");
+                        }
+                    },
+                    { passive: true },
+                );
+
+                // Click to scroll
+                scrollMouse.addEventListener("click", () => {
+                    window.scrollBy({
+                        top: window.innerHeight * 0.8,
+                        behavior: "smooth",
+                    });
+                });
+            }
+
+            // ===== FAQ Accordion =====
+            const faqItems = document.querySelectorAll(".faq-item");
+            faqItems.forEach((item) => {
+                const question = item.querySelector(".faq-question");
+                question.addEventListener("click", () => {
+                    const isActive = item.classList.contains("active");
+
+                    // Close all items
+                    faqItems.forEach((i) => i.classList.remove("active"));
+
+                    // Open clicked item if it wasn't active
+                    if (!isActive) {
+                        item.classList.add("active");
+                    }
+                });
+            });
+
+            // ===== Hero Particles =====
+            const particlesContainer =
+                document.getElementById("heroParticles");
+            if (particlesContainer) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement("div");
+                    particle.className = "particle";
+                    particle.style.left = Math.random() * 100 + "%";
+                    particle.style.animationDelay = Math.random() * 8 + "s";
+                    particle.style.animationDuration =
+                        6 + Math.random() * 4 + "s";
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            // ===== Initialize Animations =====
+            function initAnimations() {
+                // GSAP ScrollTrigger animations
+                if (
+                    typeof gsap !== "undefined" &&
+                    typeof ScrollTrigger !== "undefined"
+                ) {
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    // Reveal animations
+                    gsap.utils.toArray(".reveal-up").forEach((elem) => {
+                        gsap.fromTo(
+                            elem,
+                            { y: 60, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 1,
+                                ease: "power3.out",
+                                scrollTrigger: {
+                                    trigger: elem,
+                                    start: "top 85%",
+                                    toggleActions: "play none none none",
+                                },
+                            },
+                        );
+                    });
+
+                    // Bento cards stagger animation
+                    gsap.fromTo(
+                        ".bento-card",
+                        { y: 80, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            stagger: 0.15,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: ".bento-grid",
+                                start: "top 80%",
+                            },
+                        },
+                    );
+
+                    // Gallery cards stagger
+                    gsap.fromTo(
+                        ".gallery-card",
+                        { y: 60, opacity: 0, scale: 0.95 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.7,
+                            stagger: 0.1,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: ".gallery-collage",
+                                start: "top 80%",
+                            },
+                        },
+                    );
+
+                    // Liquid Video Expansion (Home Page - Sync with Detail)
+                    gsap.to("#homeVideoWrapper", {
+                        width: "100%",
+                        height: "100vh",
+                        borderRadius: "0",
+                        scale: 1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: ".liquid-reveal-section",
+                            start: "top top",
+                            end: "bottom bottom",
+                            scrub: 1,
+                        }
+                    });
+
+                    // Dedicated Playback Controller (Ensures reliability)
+                    ScrollTrigger.create({
+                        trigger: ".liquid-reveal-section",
+                        start: "top 80%", // Start playing as soon as it comes into view
+                        end: "bottom 20%",
+                        onEnter: () => {
+                            XenonVideo.play('homeYoutubeVideo');
+                            XenonVideo.unmute('homeYoutubeVideo');
+                        },
+                        onEnterBack: () => {
+                            XenonVideo.play('homeYoutubeVideo');
+                            XenonVideo.unmute('homeYoutubeVideo');
+                        },
+                        onLeave: () => {
+                            XenonVideo.pause('homeYoutubeVideo');
+                            XenonVideo.mute('homeYoutubeVideo');
+                        },
+                        onLeaveBack: () => {
+                            XenonVideo.pause('homeYoutubeVideo');
+                            XenonVideo.mute('homeYoutubeVideo');
+                        }
+                    });
+
+                    // Hide Navbar during Video Scroll
+                    gsap.to("#navModern", {
+                        y: "-100%",
+                        scrollTrigger: {
+                            trigger: ".liquid-reveal-section",
+                            start: "top 20%",
+                            end: "top top",
+                            scrub: true,
+                        }
+                    });
+
+                    // Show Navbar back after Video Section
+                    gsap.to("#navModern", {
+                        y: "0%",
+                        scrollTrigger: {
+                            trigger: ".liquid-reveal-section",
+                            start: "bottom top",
+                            end: "bottom -10%",
+                            scrub: true,
+                        }
+                    });
+
+                    // Picoz section parallax
+                    gsap.to(".picoz-shape-1", {
+                        y: -100,
+                        scrollTrigger: {
+                            trigger: ".picoz-section",
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: 1,
+                        },
+                    });
+
+                    gsap.to(".picoz-shape-2", {
+                        y: 100,
+                        scrollTrigger: {
+                            trigger: ".picoz-section",
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: 1.5,
+                        },
+                    });
+
+                    // FAQ items animation
+                    gsap.fromTo(
+                        ".faq-item",
+                        { x: -30, opacity: 0 },
+                        {
+                            x: 0,
+                            opacity: 1,
+                            duration: 0.6,
+                            stagger: 0.1,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: ".faq-container",
+                                start: "top 80%",
+                            },
+                        },
+                    );
+                }
+
+                // Initialize Vanilla Tilt
+                if (typeof VanillaTilt !== "undefined") {
+                    VanillaTilt.init(
+                        document.querySelectorAll("[data-tilt]"),
+                        {
+                            max: 8,
+                            speed: 400,
+                            glare: true,
+                            "max-glare": 0.2,
+                        },
+                    );
+                }
+            }
+
+            // ===== Magnetic Button Effect =====
+            const magneticBtns = document.querySelectorAll(".magnetic-btn");
+            magneticBtns.forEach((btn) => {
+                btn.addEventListener("mousemove", (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+
+                btn.addEventListener("mouseleave", () => {
+                    btn.style.transform = "translate(0, 0)";
+                });
+            });
+
+            // ===== Smooth Scroll for Anchor Links =====
+            document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                anchor.addEventListener("click", function (e) {
+                    const href = this.getAttribute("href");
+                    if (href !== "#") {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+    <script src="js/pico-z-3d.js"></script>
+    <script src="js/security.js"></script>
+</body>
+
+</html>
