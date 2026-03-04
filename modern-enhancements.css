@@ -166,12 +166,6 @@ ol {
     letter-spacing: 0.2em;
 }
 
-/* ===== Hide Cursor Elements ===== */
-.cursor,
-.cursor-dot {
-    display: none !important;
-}
-
 /* ===== Noise Overlay ===== */
 .noise-overlay {
     position: fixed;
@@ -567,156 +561,6 @@ ol {
     animation: bubblePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* ===== Scroll Mouse Indicator - Desktop Only ===== */
-.scroll-mouse {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    z-index: 10;
-    cursor: pointer;
-    opacity: 0;
-    transition:
-        opacity 0.5s ease,
-        transform 0.3s ease;
-}
-
-.scroll-mouse.visible {
-    opacity: 1;
-}
-
-.scroll-mouse.hidden {
-    opacity: 0;
-    transform: translateX(-50%) translateY(10px);
-    pointer-events: none;
-}
-
-.scroll-mouse:hover {
-    transform: translateX(-50%) translateY(-3px);
-}
-
-/* Mouse Body */
-.scroll-mouse-body {
-    width: 22px;
-    height: 36px;
-    border: 2.5px solid #000000;
-    border-radius: 11px;
-    background: rgba(255, 255, 255, 0.95);
-    position: relative;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Mouse Wheel */
-.scroll-mouse-wheel {
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3px;
-    height: 7px;
-    background: #000000;
-    border-radius: 2px;
-    animation: mouseWheel 1.5s ease-in-out infinite;
-}
-
-/* Scroll Arrows */
-.scroll-mouse-arrows {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.scroll-mouse-arrows span {
-    width: 8px;
-    height: 8px;
-    border-right: 2px solid #000000;
-    border-bottom: 2px solid #000000;
-    transform: rotate(45deg);
-    opacity: 0;
-    animation: scrollArrow 1.5s ease-in-out infinite;
-}
-
-.scroll-mouse-arrows span:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.scroll-mouse-arrows span:nth-child(2) {
-    margin-top: -4px;
-    animation-delay: 0.15s;
-}
-
-@keyframes mouseWheel {
-
-    0%,
-    100% {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-    }
-
-    50% {
-        transform: translateX(-50%) translateY(8px);
-        opacity: 0.3;
-    }
-}
-
-@keyframes scrollArrow {
-
-    0%,
-    100% {
-        opacity: 0.3;
-        transform: rotate(45deg) translateY(0);
-    }
-
-    50% {
-        opacity: 1;
-        transform: rotate(45deg) translateY(2px);
-    }
-}
-
-/* Legacy scroll indicator - hidden */
-.scroll-indicator {
-    display: none;
-}
-
-@keyframes fade-in {
-    to {
-        opacity: 1;
-    }
-}
-
-.scroll-indicator span {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--dark);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-}
-
-.scroll-arrow {
-    animation: bounce 2s ease-in-out infinite;
-}
-
-.scroll-arrow svg {
-    stroke: var(--primary);
-}
-
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(8px);
-    }
-}
-
 /* ===== Marquee Section ===== */
 .marquee-section {
     padding: 1.5rem 0;
@@ -746,8 +590,8 @@ ol {
     font-family: Arial, Helvetica, sans-serif;
     font-size: clamp(1.25rem, 3vw, 2rem);
     font-weight: 900;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.88);
+    -webkit-text-stroke: 0px transparent;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     white-space: nowrap;
@@ -850,74 +694,6 @@ ol {
     background: white;
     border-radius: 24px;
     overflow: hidden;
-    transition:
-        transform 0.6s var(--ease-out-expo),
-        box-shadow 0.6s var(--ease-out-expo);
-    transform-style: preserve-3d;
-}
-
-.bento-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-1);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.bento-card:hover::before {
-    opacity: 0.03;
-}
-
-.bento-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow:
-        0 30px 60px rgba(0, 0, 0, 0.15),
-        0 10px 20px rgba(151, 58, 48, 0.1);
-}
-
-.bento-card-shine {
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent);
-    transition: left 0.8s var(--ease-out-expo);
-    pointer-events: none;
-    z-index: 10;
-}
-
-.bento-card:hover .bento-card-shine {
-    left: 150%;
-}
-
-.bento-card-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 80%;
-    height: 80%;
-    background: radial-gradient(circle,
-            rgba(255, 107, 91, 0.15) 0%,
-            transparent 70%);
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.bento-card:hover .bento-card-glow {
-    opacity: 1;
 }
 
 .bento-card--featured {
@@ -966,11 +742,6 @@ ol {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s var(--ease-out-expo);
-}
-
-.bento-card:hover .bento-image {
-    transform: scale(1.08);
 }
 
 .bento-content {
@@ -1024,48 +795,12 @@ ol {
     color: var(--dark);
     text-decoration: none;
     overflow: hidden;
-    transition: all 0.4s var(--ease-out-expo);
-}
-
-.magnetic-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-1);
-    transform: translateY(100%);
-    transition: transform 0.4s var(--ease-out-expo);
-    z-index: -1;
-}
-
-.magnetic-btn:hover::before {
-    transform: translateY(0);
-}
-
-.magnetic-btn:hover {
-    color: white;
-    border-color: transparent;
-    box-shadow: 0 15px 40px rgba(151, 58, 48, 0.3);
-}
-
-.magnetic-btn svg {
-    transition: transform 0.3s var(--ease-out-expo);
-}
-
-.magnetic-btn:hover svg {
-    transform: translateX(5px);
 }
 
 .btn-buy--primary {
     background: var(--gradient-1);
     border-color: transparent;
     color: white;
-}
-
-.btn-buy--primary::before {
-    background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
 }
 
 .bento-card--featured .magnetic-btn {
@@ -2934,11 +2669,6 @@ ol {
         border-right-width: 9px;
     }
 
-    /* Hide Mouse on Tablet/Mobile */
-    .scroll-mouse {
-        display: none;
-    }
-
     .nav-menu-modern {
         position: fixed;
         top: 0;
@@ -3508,33 +3238,26 @@ ol {
 /* ===== SYNCHRONIZED LIQUID VIDEO (Home & Detail) ===== */
 .liquid-reveal-section {
     position: relative;
-    height: 250vh;
     background: #ffffff !important;
-    overflow: visible;
+    padding: 80px 0;
 }
 
 .liquid-reveal-section .video-reveal-container {
-    position: sticky;
-    top: 0;
-    height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     background: #ffffff !important;
 }
 
 .liquid-reveal-section .liquid-video-wrapper {
     position: relative;
-    width: 60%;
+    width: 75%;
     height: 60vh;
-    border-radius: 40px;
+    border-radius: 20px;
     overflow: hidden;
-    transform: scale(0.8);
     background: #000;
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
-    will-change: width, height, border-radius;
 }
 
 .liquid-reveal-section .youtube-video {
@@ -3545,4 +3268,396 @@ ol {
     height: 100%;
     transform: translate(-50%, -50%) scale(1.1);
     pointer-events: none;
+}
+
+/* =====================================================
+   COMPREHENSIVE DEVICE OPTIMISATION
+   Covers: mobile phones, tablets, touch, landscape,
+   tiny screens, reduced motion, and print.
+   ===================================================== */
+
+/* ----- Global fluid media ----- */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+/* Prevent iOS font size inflation */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* Smooth scrolling on iOS */
+body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+}
+
+/* Prevent horizontal overflow from any element */
+body,
+.main-content,
+.nav-container-modern,
+.footer-content {
+    overflow-x: hidden;
+}
+
+/* iOS: prevent zoom on input focus (must be 16px+) */
+input,
+textarea,
+select {
+    font-size: 16px;
+}
+
+/* ----- Liquid video section — tablet ----- */
+@media (max-width: 768px) {
+    .liquid-reveal-section {
+        padding: 40px 0;
+    }
+
+    .liquid-reveal-section .liquid-video-wrapper {
+        width: 94%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 14px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .liquid-reveal-section .youtube-video {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Pico Z — remove full viewport height on mobile */
+    .picoz-section {
+        min-height: auto;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    /* Picoz container stacks on small tablets */
+    .picoz-container {
+        gap: 2.5rem;
+    }
+
+    /* Page hero subtitle slightly smaller */
+    .page-hero-subtitle {
+        font-size: 1.05rem;
+    }
+
+    /* Preloader bar fits small screens */
+    .preloader-bar {
+        width: 160px;
+    }
+
+    /* Footer bottom padding */
+    .footer-modern {
+        padding-bottom: 3rem;
+    }
+}
+
+/* ----- Liquid video section — phones ----- */
+@media (max-width: 480px) {
+    .liquid-reveal-section {
+        padding: 24px 0;
+    }
+
+    .liquid-reveal-section .liquid-video-wrapper {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .liquid-reveal-section .youtube-video {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* ----- Touch-device specific styles ----- */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Always show gallery overlay on touch (no hover) */
+    .gallery-overlay {
+        transform: translateY(0) !important;
+        opacity: 1;
+    }
+
+    .gallery-card::before {
+        opacity: 0.6 !important;
+    }
+
+    /* Remove hover transforms — they break layout when sticky on touch */
+    .gallery-card:hover {
+        transform: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .gallery-card:hover .gallery-image {
+        transform: none;
+    }
+
+    .about-card:hover,
+    .feature-card-modern:hover,
+    .feature-showcase-card:hover,
+    .manga-card-modern:hover,
+    .spec-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .value-item:hover {
+        transform: none;
+    }
+
+    .video-wrapper:hover {
+        transform: none;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Disable VanillaTilt 3D on touch */
+    [data-tilt] {
+        transform: none !important;
+    }
+
+    /* Ensure minimum touch target size (48 × 48 px) */
+    .btn-buy,
+    .magnetic-btn,
+    .picoz-link,
+    .read-btn-modern,
+    .submit-btn-modern,
+    .faq-question,
+    .footer-social-link,
+    .contact-social-link,
+    .back-to-top,
+    .nav-toggle-modern {
+        min-height: 48px;
+        min-width: 48px;
+    }
+
+    /* FAQ icon tap area */
+    .faq-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* Remove magnetic / cursor effects that are desktop-only  */
+    .magnetic-btn {
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+}
+
+/* ----- Landscape mobile ----- */
+@media (max-height: 600px) and (orientation: landscape) {
+    .page-hero {
+        min-height: auto;
+        padding: 5rem 2rem 2.5rem;
+    }
+
+    .picoz-section {
+        min-height: auto;
+    }
+
+    /* Full-screen nav menu: allow scroll & shrink links */
+    .nav-menu-modern {
+        padding: 3.5rem 0 2rem;
+        overflow-y: auto;
+    }
+
+    .nav-link-modern {
+        font-size: 1.15rem;
+        padding: 0.55rem 2rem;
+    }
+
+    .hero-brand-image {
+        width: 100px;
+    }
+
+    .speech-bubble {
+        top: 38%;
+    }
+
+    .message-line-2 {
+        font-size: 1rem;
+    }
+}
+
+/* ----- Tiny screens: 320 px (Galaxy Fold, etc.) ----- */
+@media (max-width: 320px) {
+    .hero-brand-image {
+        width: 80px;
+    }
+
+    .speech-bubble {
+        top: 33%;
+        left: 60%;
+    }
+
+    .speech-bubble-inner {
+        padding: 6px 10px;
+        min-width: 80px;
+    }
+
+    .message-line-1 {
+        font-size: 0.6rem;
+    }
+
+    .message-line-2 {
+        font-size: 0.8rem;
+    }
+
+    .nav-container-modern {
+        padding: 0 0.75rem;
+    }
+
+    .nav-logo-img {
+        height: 38px;
+    }
+
+    .bento-content {
+        padding: 1rem 1.25rem 1.25rem;
+    }
+
+    .bento-title {
+        font-size: 1.1rem;
+    }
+
+    .btn-buy {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    .page-hero-title {
+        font-size: clamp(1.75rem, 10vw, 2.5rem);
+    }
+
+    .page-hero-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .footer-modern {
+        padding: 3rem 0.75rem 2rem;
+    }
+
+    .section-title-modern {
+        font-size: clamp(1.75rem, 9vw, 2.5rem);
+    }
+
+    .picoz-title {
+        font-size: clamp(2.25rem, 12vw, 3.5rem);
+    }
+
+    .preloader-bar {
+        width: 130px;
+    }
+}
+
+/* ----- Wide desktop: keep content from stretching too far ----- */
+@media (min-width: 1600px) {
+
+    .bento-grid,
+    .gallery-collage,
+    .features-grid-modern,
+    .features-showcase,
+    .specs-grid,
+    .manga-grid {
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .nav-container-modern {
+        max-width: 1600px;
+    }
+}
+
+/* ----- Respect reduced-motion user preference ----- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .marquee-wrapper {
+        animation: none;
+        overflow-x: auto;
+    }
+
+    .picoz-shape,
+    .picoz-energy-ring,
+    .picoz-particle,
+    .picoz-status-dot,
+    .picoz-badge-dot,
+    .preloader-logo-img,
+    .footer-shape,
+    .noise-overlay {
+        animation: none !important;
+    }
+}
+
+/* ----- Print: strip decorative UI chrome ----- */
+@media print {
+
+    .nav-modern,
+    .preloader,
+    .noise-overlay,
+    .scroll-progress,
+    .back-to-top,
+    .page-transition,
+    .marquee-section,
+    .picoz-bg-shapes,
+    .footer-bg-shapes {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.75rem;
+        color: #666;
+    }
+}
+
+/* ----- Nav hamburger always visible on large/light hero ----- */
+.nav-toggle-modern span {
+    background: var(--dark);
+}
+
+/* When scrolled or when nav is over dark bg, spans stay white */
+.nav-modern.scrolled .nav-toggle-modern span {
+    background: white;
+}
+
+/* When mobile menu is OPEN, X icon must be white (on dark overlay) */
+.nav-toggle-modern.active span {
+    background: white;
+}
+
+/* ----- Safe-area insets for notched phones (Face ID, etc.) ----- */
+@supports (padding-top: env(safe-area-inset-top)) {
+    .nav-modern {
+        padding-top: calc(1.5rem + env(safe-area-inset-top));
+    }
+
+    .nav-modern.scrolled {
+        padding-top: calc(1rem + env(safe-area-inset-top));
+    }
+
+    .footer-modern {
+        padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+    }
+
+    .back-to-top {
+        bottom: calc(2rem + env(safe-area-inset-bottom));
+        right: calc(2rem + env(safe-area-inset-right));
+    }
 }
