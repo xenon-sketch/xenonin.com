@@ -193,6 +193,133 @@
             width: 24px;
             height: 24px;
         }
+
+        /* ===== Responsive - Tablet ===== */
+        @media (max-width: 1024px) {
+            .liquid-video-wrapper {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .picoz-detail-hero {
+                height: 70vh;
+            }
+
+            .hero-detail-title {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .hero-detail-content p {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .liquid-video-wrapper {
+                width: 94%;
+                aspect-ratio: 16 / 9;
+                border-radius: 16px;
+            }
+
+            .sound-toggle {
+                top: 80px;
+                right: 20px;
+                width: 44px;
+                height: 44px;
+            }
+
+            .sound-toggle svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .back-btn-container {
+                bottom: 24px;
+            }
+
+            .btn-back {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .scroll-down-hint {
+                bottom: 24px;
+                font-size: 0.7rem;
+            }
+
+            .hint-bar {
+                height: 40px;
+            }
+        }
+
+        /* ===== Responsive - Phone ===== */
+        @media (max-width: 480px) {
+            .picoz-detail-hero {
+                height: 60vh;
+            }
+
+            .hero-detail-title {
+                font-size: clamp(1.75rem, 10vw, 3rem);
+            }
+
+            .hero-detail-content {
+                padding: 1rem;
+            }
+
+            .hero-detail-content p {
+                font-size: 0.9rem;
+            }
+
+            .liquid-video-section {
+                height: 150vh;
+            }
+
+            .liquid-video-wrapper {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .sound-toggle {
+                top: 70px;
+                right: 12px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .back-btn-container {
+                bottom: 16px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 32px);
+            }
+
+            .btn-back {
+                width: 100%;
+                justify-content: center;
+                padding: 0.75rem 1.25rem;
+                font-size: 0.85rem;
+            }
+
+            .scroll-down-hint {
+                bottom: 16px;
+            }
+        }
+
+        /* ===== Landscape Phone ===== */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .picoz-detail-hero {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .hero-detail-title {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+            }
+
+            .scroll-down-hint {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -201,7 +328,7 @@
     <!-- Navigation -->
     <nav class="nav-modern scrolled" id="navModern">
         <div class="nav-container-modern">
-            <a href="index.html" class="nav-logo-modern">
+            <a href="index.html" class="nav-logo-modern" style="opacity: 1; transform: translateY(0)">
                 <img src="assets/Xenon Industries Logo.png" alt="Xenon Industries" class="nav-logo-img" />
             </a>
             <ul class="nav-menu-modern" id="navMenu">
@@ -211,6 +338,12 @@
                 <li><a href="manga-series.html" class="nav-link-modern">Manga</a></li>
                 <li><a href="contact.html" class="nav-link-modern">Contact</a></li>
             </ul>
+
+            <button class="nav-toggle-modern" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
@@ -400,6 +533,41 @@
             }), '*');
         };
 
+        // Mobile Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navToggle.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            });
+
+            document.addEventListener('click', (e) => {
+                if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                    navToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            document.querySelectorAll('.nav-link-modern').forEach(link => {
+                link.addEventListener('click', () => {
+                    navToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                    navToggle.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
     </script>
 
     <script src="js/security.js"></script>
