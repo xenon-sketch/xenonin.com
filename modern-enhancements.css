@@ -81,6 +81,17 @@ ol {
     list-style: none;
 }
 
+/* ===== Text Overflow & Sizing Safety ===== */
+h1, h2, h3, h4, h5, h6,
+.bento-title,
+.section-title-modern,
+.page-hero-title,
+.picoz-title,
+.manga-story-title {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
 /* ===== Preloader ===== */
 .preloader {
     position: fixed;
@@ -2788,6 +2799,17 @@ ol {
     .manga-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .manga-grid--showcase {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ensure liquid video is usable on tablets */
+    .liquid-reveal-section .liquid-video-wrapper {
+        width: 90%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
 }
 
 /* Tablets */
@@ -3011,6 +3033,34 @@ ol {
     .contact-form-modern {
         padding: 2rem;
     }
+
+    /* Better button sizing on tablets */
+    .btn-buy,
+    .magnetic-btn,
+    .picoz-link {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+    }
+
+    /* Footer column link alignment fix */
+    .footer-column {
+        text-align: center;
+    }
+
+    .footer-column a:hover {
+        transform: none;
+    }
+
+    /* Prevent hero image from being too tall on tablets */
+    .hero-header {
+        max-height: 75vh;
+    }
+
+    .hero-image {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
 }
 
 /* Mobile phones */
@@ -3162,6 +3212,72 @@ ol {
     .manga-grid-section,
     .manga-info-section {
         padding: 4rem 1rem;
+    }
+
+    /* Full-width CTAs on small phones */
+    .bento-content .btn-buy {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Tighter marquee on mobile */
+    .marquee-section {
+        padding: 0.75rem 0;
+    }
+
+    .marquee-item {
+        font-size: 1rem;
+    }
+
+    /* Tighter contact form */
+    .contact-form-modern {
+        padding: 1.5rem;
+    }
+
+    /* Better hero containment */
+    .hero-header {
+        max-height: 60vh;
+    }
+
+    .hero-image {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    /* Gallery card min height for consistency */
+    .gallery-card--1,
+    .gallery-card--2,
+    .gallery-card--3,
+    .gallery-card--4,
+    .gallery-card--5,
+    .gallery-card--6 {
+        height: auto;
+        min-height: 200px;
+    }
+
+    /* Page hero tighter on phones */
+    .page-hero {
+        min-height: 40vh;
+        padding: 5rem 1rem 2.5rem;
+    }
+
+    .page-hero-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem);
+    }
+
+    .page-hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    /* About card tighter */
+    .about-card {
+        padding: 1.5rem;
+    }
+
+    /* Value items stack better */
+    .value-item {
+        padding: 1rem;
     }
 }
 
@@ -3783,6 +3899,44 @@ select {
 
     .nav-container-modern {
         max-width: 1600px;
+    }
+
+    /* Larger typography on big screens */
+    .bento-title {
+        font-size: 1.75rem;
+    }
+
+    .bento-text {
+        font-size: 1.05rem;
+    }
+
+    /* Better gallery card height on large screens */
+    .gallery-collage {
+        grid-template-rows: repeat(2, 340px);
+    }
+
+    /* More breathing room */
+    .products-section,
+    .gallery-section,
+    .faq-section {
+        padding: 8rem 3rem;
+    }
+
+    .picoz-section {
+        padding: 8rem 3rem;
+    }
+
+    .footer-modern {
+        padding: 8rem 3rem 3rem;
+    }
+}
+
+/* ----- Large desktops: optimal reading width ----- */
+@media (min-width: 1200px) and (max-width: 1599px) {
+    .products-section,
+    .gallery-section,
+    .faq-section {
+        padding: 7rem 2.5rem;
     }
 }
 
