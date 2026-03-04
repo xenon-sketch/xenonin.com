@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Xenon Industry | PikoBot - Your Desk Companion</title>
-    <link rel="stylesheet" href="styles.css" />
     <!-- Google Fonts - Modern Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -99,16 +98,6 @@
             </div>
         </div>
 
-        <!-- Mouse Scroll Indicator - Desktop Only -->
-        <div class="scroll-mouse" id="scrollMouse">
-            <div class="scroll-mouse-body">
-                <div class="scroll-mouse-wheel"></div>
-            </div>
-            <div class="scroll-mouse-arrows">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
     </header>
 
     <!-- Marquee Section -->
@@ -164,10 +153,7 @@
             </div>
 
             <div class="bento-grid">
-                <article class="bento-card" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare
-                    data-tilt-max-glare="0.2">
-                    <div class="bento-card-shine"></div>
-                    <div class="bento-card-glow"></div>
+                <article class="bento-card">
                     <div class="bento-media">
                         <img src="assets/card-1.png" alt="Starter Pack" class="bento-image" />
                     </div>
@@ -175,10 +161,10 @@
                         <span class="bento-tag">Standard</span>
                         <h3 class="bento-title">PikoBot Transparent</h3>
                         <p class="bento-text">
-                            2000 Taka
+                            2300 Taka
                         </p>
                         <button class="btn-buy magnetic-btn"
-                            onclick="window.location.href='https://forms.gle/gHCmJMsRWZAqbAQs9'">
+                            onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Transparent+(Limited+Version)&entry.1019478409=Cash+on+Delivery'">
                             <span>Buy now</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -188,10 +174,7 @@
                     </div>
                 </article>
 
-                <article class="bento-card bento-card--featured" data-tilt data-tilt-max="8" data-tilt-speed="400"
-                    data-tilt-glare data-tilt-max-glare="0.3">
-                    <div class="bento-card-shine"></div>
-                    <div class="bento-card-glow"></div>
+                <article class="bento-card bento-card--featured">
                     <div class="featured-badge">
                         <span>Most Popular</span>
                     </div>
@@ -202,10 +185,10 @@
                         <span class="bento-tag">Advanced</span>
                         <h3 class="bento-title">PikoBot Classic</h3>
                         <p class="bento-text">
-                            1900 Taka
+                            2200 Taka
                         </p>
                         <button class="btn-buy btn-buy--primary magnetic-btn"
-                            onclick="window.location.href='https://forms.gle/owb5F4uxxm4AvbCLA'">
+                            onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Classic&entry.1019478409=Cash+on+Delivery'">
                             <span>Buy now</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -215,10 +198,7 @@
                     </div>
                 </article>
 
-                <article class="bento-card" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare
-                    data-tilt-max-glare="0.2">
-                    <div class="bento-card-shine"></div>
-                    <div class="bento-card-glow"></div>
+                <article class="bento-card">
                     <div class="bento-media">
                         <img src="assets/card-3.png" alt="Collector Edition" class="bento-image" />
                     </div>
@@ -226,10 +206,10 @@
                         <span class="bento-tag">Limited</span>
                         <h3 class="bento-title">PikoBot B&W</h3>
                         <p class="bento-text">
-                            1900 Taka
+                            2100 Taka
                         </p>
                         <button class="btn-buy magnetic-btn"
-                            onclick="window.location.href='https://forms.gle/BhL6BKfpDQj2xFmr8'">
+                            onclick="window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Black+%26+White&entry.1019478409=Cash+on+Delivery'">
                             <span>Buy now</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -337,12 +317,6 @@
 
                         <!-- Holographic scanlines -->
                         <div class="holo-scanlines"></div>
-
-                        <!-- Status indicator -->
-                        <div class="picoz-status">
-                            <div class="picoz-status-dot"></div>
-                            <span class="picoz-status-text">Initializing 3D View</span>
-                        </div>
 
                         <!-- Fallback image for older browsers -->
 
@@ -594,9 +568,15 @@
                 <div class="footer-column">
                     <h4>Products</h4>
                     <ul>
-                        <li><a href="https://forms.gle/gHCmJMsRWZAqbAQs9">Starter Pack</a></li>
-                        <li><a href="https://forms.gle/owb5F4uxxm4AvbCLA">Pro Suite</a></li>
-                        <li><a href="https://forms.gle/BhL6BKfpDQj2xFmr8">Collector Edition</a></li>
+                        <li><a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Transparent+(Limited+Version)&entry.1019478409=Cash+on+Delivery">Starter
+                                Pack</a></li>
+                        <li><a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Classic&entry.1019478409=Cash+on+Delivery">Pro
+                                Suite</a></li>
+                        <li><a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Black+%26+White&entry.1019478409=Cash+on+Delivery">Collector
+                                Edition</a></li>
                         <li><a href="pico-z-detail.html">Pico Z</a></li>
                     </ul>
                 </div>
@@ -781,36 +761,6 @@
                 }, 600);
             }
 
-            // ===== Mouse Scroll Indicator =====
-            const scrollMouse = document.getElementById("scrollMouse");
-            if (scrollMouse) {
-                // Show after delay
-                setTimeout(() => {
-                    scrollMouse.classList.add("visible");
-                }, 1200);
-
-                // Hide on scroll
-                window.addEventListener(
-                    "scroll",
-                    () => {
-                        if (window.scrollY > 100) {
-                            scrollMouse.classList.add("hidden");
-                        } else {
-                            scrollMouse.classList.remove("hidden");
-                        }
-                    },
-                    { passive: true },
-                );
-
-                // Click to scroll
-                scrollMouse.addEventListener("click", () => {
-                    window.scrollBy({
-                        top: window.innerHeight * 0.8,
-                        behavior: "smooth",
-                    });
-                });
-            }
-
             // ===== FAQ Accordion =====
             const faqItems = document.querySelectorAll(".faq-item");
             faqItems.forEach((item) => {
@@ -906,20 +856,6 @@
                         },
                     );
 
-                    // Liquid Video Expansion (Home Page - Sync with Detail)
-                    gsap.to("#homeVideoWrapper", {
-                        width: "100%",
-                        height: "100vh",
-                        borderRadius: "0",
-                        scale: 1,
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: ".liquid-reveal-section",
-                            start: "top top",
-                            end: "bottom bottom",
-                            scrub: 1,
-                        }
-                    });
 
                     // Dedicated Playback Controller (Ensures reliability)
                     ScrollTrigger.create({
@@ -1018,22 +954,6 @@
                     );
                 }
             }
-
-            // ===== Magnetic Button Effect =====
-            const magneticBtns = document.querySelectorAll(".magnetic-btn");
-            magneticBtns.forEach((btn) => {
-                btn.addEventListener("mousemove", (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-
-                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-                });
-
-                btn.addEventListener("mouseleave", () => {
-                    btn.style.transform = "translate(0, 0)";
-                });
-            });
 
             // ===== Smooth Scroll for Anchor Links =====
             document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
