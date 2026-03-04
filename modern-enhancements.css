@@ -82,7 +82,12 @@ ol {
 }
 
 /* ===== Text Overflow & Sizing Safety ===== */
-h1, h2, h3, h4, h5, h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 .bento-title,
 .section-title-modern,
 .page-hero-title,
@@ -3933,6 +3938,7 @@ select {
 
 /* ----- Large desktops: optimal reading width ----- */
 @media (min-width: 1200px) and (max-width: 1599px) {
+
     .products-section,
     .gallery-section,
     .faq-section {
