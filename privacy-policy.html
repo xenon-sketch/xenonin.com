@@ -154,12 +154,63 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
             .notepad-paper {
                 padding: 40px 20px 40px 50px;
             }
 
             .notepad-paper::before {
                 left: 30px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+
+            .warranty-card {
+                padding: 8px 12px;
+            }
+
+            .back-btn-container {
+                margin-bottom: 20px;
+            }
+
+            .back-link {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .notepad-paper {
+                padding: 30px 15px 30px 40px;
+            }
+
+            .notepad-paper::before {
+                left: 22px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .handwritten {
+                font-size: 1.2rem;
             }
         }
     </style>
