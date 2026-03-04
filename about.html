@@ -88,7 +88,7 @@
         <section class="about-mission-section">
             <div class="about-container">
                 <div class="about-grid">
-                    <div class="about-card reveal-up" data-tilt data-tilt-max="5">
+                    <div class="about-card">
                         <div class="about-card-icon">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -108,7 +108,7 @@
                         </p>
                     </div>
 
-                    <div class="about-card reveal-up" data-tilt data-tilt-max="5">
+                    <div class="about-card">
                         <div class="about-card-icon">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -302,9 +302,15 @@
                 <div class="footer-column">
                     <h4>Products</h4>
                     <ul>
-                        <li><a href="https://forms.gle/gHCmJMsRWZAqbAQs9">Starter Pack</a></li>
-                        <li><a href="https://forms.gle/owb5F4uxxm4AvbCLA">Pro Suite</a></li>
-                        <li><a href="https://forms.gle/BhL6BKfpDQj2xFmr8">Collector Edition</a></li>
+                        <li><a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Transparent+(Limited+Version)&entry.1019478409=Cash+on+Delivery">Starter
+                                Pack</a></li>
+                        <li><a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Classic&entry.1019478409=Cash+on+Delivery">Pro
+                                Suite</a></li>
+                        <li><a
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Black+%26+White&entry.1019478409=Cash+on+Delivery">Collector
+                                Edition</a></li>
                         <li><a href="pico-z-detail.html">Pico Z</a></li>
                     </ul>
                 </div>
@@ -416,21 +422,6 @@
                             }
                         );
                     });
-
-                    gsap.fromTo(".about-card",
-                        { y: 80, opacity: 0 },
-                        {
-                            y: 0,
-                            opacity: 1,
-                            duration: 0.8,
-                            stagger: 0.2,
-                            ease: "power3.out",
-                            scrollTrigger: {
-                                trigger: ".about-grid",
-                                start: "top 80%",
-                            },
-                        }
-                    );
 
                     gsap.fromTo(".feature-card-modern",
                         { y: 60, opacity: 0, scale: 0.95 },
