@@ -765,8 +765,32 @@ h6,
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    z-index: 4;
+    z-index: 5;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Top blur/gray mask to improve badge readability */
+.bento-media::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Uniform translucent overlay; do not use backdrop-filter so blur comes only from the image filter */
+    background: rgba(0, 0, 0, 0.22);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Keep same overlay for featured cards to maintain consistency */
+.bento-card--featured .bento-media::before {
+    background: rgba(0, 0, 0, 0.18);
+}
+
+/* Ensure image sits below the overlay and badge */
+.bento-image {
+    z-index: 1;
 }
 
 .bento-image {
@@ -854,6 +878,29 @@ h6,
 
 .btn-disabled svg {
     opacity: 0.6;
+}
+
+/* ===== Global image blur ===== */
+/* Apply a stronger blur to product and gallery images; keep logos sharp */
+img {
+    transition: filter 0.25s ease;
+}
+
+/* Keep core UI/logo images sharp */
+.nav-logo-img,
+.hero-brand-image,
+.preloader-logo-img,
+.picoz-3d-container canvas,
+.back-to-top svg,
+.footer-social-link svg {
+    filter: none !important;
+}
+
+/* Explicitly blur product and gallery images */
+.bento-image,
+.bento-media img,
+.gallery-image {
+    filter: blur(6px) !important;
 }
 
 .btn-buy--primary {
