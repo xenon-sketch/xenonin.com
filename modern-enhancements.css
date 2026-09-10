@@ -751,44 +751,6 @@ h6,
     overflow: hidden;
 }
 
-/* Out of stock badge on product media */
-.out-of-stock-badge {
-    position: absolute;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.85);
-    color: #fff;
-    padding: 0.45rem 0.9rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    z-index: 5;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-}
-
-/* Top blur/gray mask to improve badge readability */
-.bento-media::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* Uniform translucent overlay; do not use backdrop-filter so blur comes only from the image filter */
-    background: rgba(0, 0, 0, 0.22);
-    z-index: 3;
-    pointer-events: none;
-}
-
-/* Keep same overlay for featured cards to maintain consistency */
-.bento-card--featured .bento-media::before {
-    background: rgba(0, 0, 0, 0.18);
-}
-
-/* Ensure image sits below the overlay and badge */
 .bento-image {
     z-index: 1;
 }
@@ -896,11 +858,11 @@ img {
     filter: none !important;
 }
 
-/* Explicitly blur product and gallery images */
+/* Keep product and gallery images clear. */
 .bento-image,
 .bento-media img,
 .gallery-image {
-    filter: blur(6px) !important;
+    filter: none !important;
 }
 
 .btn-buy--primary {
