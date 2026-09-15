@@ -842,9 +842,9 @@ h6,
     opacity: 0.6;
 }
 
-/* ===== Global image blur ===== */
-/* Apply a stronger blur to product and gallery images; keep logos sharp */
+/* ===== Global image clarity ===== */
 img {
+    filter: none !important;
     transition: filter 0.25s ease;
 }
 
