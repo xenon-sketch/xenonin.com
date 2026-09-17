@@ -842,28 +842,13 @@ h6,
     opacity: 0.6;
 }
 
-/* ===== Global image clarity ===== */
+/* ===== Global image availability state ===== */
 img {
-    filter: none !important;
+    filter: blur(6px) !important;
     transition: filter 0.25s ease;
 }
 
-/* Keep core UI/logo images sharp */
-.nav-logo-img,
-.hero-brand-image,
-.preloader-logo-img,
-.picoz-3d-container canvas,
-.back-to-top svg,
-.footer-social-link svg {
-    filter: none !important;
-}
-
-/* Keep product and gallery images clear. */
-.bento-image,
-.bento-media img,
-.gallery-image {
-    filter: none !important;
-}
+/* Images are blurred while the collection is out of stock. */
 
 .btn-buy--primary {
     background: var(--gradient-1);
