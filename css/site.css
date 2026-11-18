@@ -363,3 +363,13 @@ a { color: inherit; }
 .hero .stock--out, .feature .stock--out, .bot--hero .stock--out, .next .stock--out { color: var(--ink); }
 .soon .stock--out { color: inherit; }
 .bot__action:empty { display: none; }
+
+/* warranty */
+.cover { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.cover > div { border-top: 2px solid var(--pla); padding-top: 22px; }
+.cover h3 { margin: 0 0 14px; font-size: 22px; }
+.cover ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.cover li { padding-left: 26px; position: relative; color: #E4DFD7; }
+.cover > div:first-child li::before { content: ""; position: absolute; left: 0; top: .5em; width: 12px; height: 12px; border-radius: 3px; background: #3BB273; }
+.cover > div:last-child li::before { content: ""; position: absolute; left: 2px; top: .75em; width: 10px; height: 2.5px; background: var(--orange); }
+@media (max-width: 960px) { .cover { grid-template-columns: 1fr; gap: 40px; } }
