@@ -4,26 +4,25 @@
    status: "buy"      -> "Buy now" button, opens the order form (cash on delivery)
    status: "preorder" -> "Pre-order" button, opens the same order form
    status: "soon"     -> "Coming soon" + a "Get notified" link to Instagram       */
-const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.1019478409=Cash+on+Delivery&entry.550752312=";
 const NOTIFY_URL = "https://www.instagram.com/xenon.industries";
+// Each PikoBot has its own order form link (taken from the old site)
 const PRODUCTS = {
-  classic: { status: "preorder", formName: "PikoBot Classic" },
-  bruno:   { status: "preorder", formName: "PikoBot Bruno" },
-  bw:      { status: "preorder", formName: "PikoBot Black & White" },
+  classic: { status: "preorder", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Classic&entry.1019478409=Cash+on+Delivery" },
+  bruno:   { status: "preorder", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Transparent+(Limited+Version)&entry.1019478409=Cash+on+Delivery" },
+  bw:      { status: "preorder", formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.550752312=PikoBot+Black+%26+White&entry.1019478409=Cash+on+Delivery" },
   tofubot: { status: "soon" },
   zenlamp: { status: "soon" },
   clock:   { status: "soon" },
 };
 
-const formLink = (name) => FORM + encodeURIComponent(name).replace(/%20/g, "+");
 document.querySelectorAll("[data-action]").forEach((slot) => {
   const p = PRODUCTS[slot.dataset.action];
   if (!p) return;
   const style = slot.dataset.style || "btn--ink";
   if (p.status === "buy") {
-    slot.innerHTML = `<a class="btn ${style}" href="${formLink(p.formName)}" target="_blank" rel="noopener">Buy now</a><span class="stock">In stock, cash on delivery</span>`;
+    slot.innerHTML = `<a class="btn ${style}" href="${p.formUrl}" target="_blank" rel="noopener">Buy now</a><span class="stock">In stock, cash on delivery</span>`;
   } else if (p.status === "preorder") {
-    slot.innerHTML = `<a class="btn ${style}" href="${formLink(p.formName)}" target="_blank" rel="noopener">Pre-order</a><span class="stock stock--out">Sold out, next batch on pre-order</span>`;
+    slot.innerHTML = `<a class="btn ${style}" href="${p.formUrl}" target="_blank" rel="noopener">Pre-order</a><span class="stock stock--out">Sold out, next batch on pre-order</span>`;
   } else {
     slot.innerHTML = `<span class="stock stock--out">Coming soon</span><a class="btn ${style}" href="${NOTIFY_URL}" target="_blank" rel="noopener">Get notified</a>`;
   }
