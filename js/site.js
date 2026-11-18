@@ -1,26 +1,37 @@
 /* Xenon Industries site script */
 
-/* ---- Stock + order links: edit here when stock changes ----
-   inStock: true  -> shows "Order, cash on delivery" and opens the order form
-   inStock: false -> shows "Sold out" and a restock link to Instagram          */
+/* ---- Stock + order buttons: edit here when stock changes ----
+   status: "buy"      -> "Buy now" button, opens the order form (cash on delivery)
+   status: "preorder" -> "Pre-order" button, opens the same order form
+   status: "soon"     -> "Coming soon" + a "Get notified" link to Instagram       */
 const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfCW9DRiWOvLXy0NVFJLAx4bVV4eMl2Oq83eg4WDIAkjex2NQ/viewform?usp=pp_url&entry.1019478409=Cash+on+Delivery&entry.550752312=";
+const NOTIFY_URL = "https://www.instagram.com/xenon.industries";
 const PRODUCTS = {
-  classic: { inStock: false, formName: "PikoBot Classic" },
-  bruno:   { inStock: false, formName: "PikoBot Bruno" },
-  bw:      { inStock: false, formName: "PikoBot Black & White" },
+  classic: { status: "preorder", formName: "PikoBot Classic" },
+  bruno:   { status: "preorder", formName: "PikoBot Bruno" },
+  bw:      { status: "preorder", formName: "PikoBot Black & White" },
+  tofubot: { status: "soon" },
+  zenlamp: { status: "soon" },
+  clock:   { status: "soon" },
 };
-const RESTOCK_URL = "https://www.instagram.com/xenon.industries";
 
-document.querySelectorAll("[data-product]").forEach((card) => {
-  const p = PRODUCTS[card.dataset.product];
-  const slot = card.querySelector("[data-action]");
-  if (!p || !slot) return;
-  const featured = card.classList.contains("bot--hero");
-  if (p.inStock) {
-    slot.innerHTML = `<a class="btn ${featured ? "btn--ink" : "btn--orange"}" href="${FORM + encodeURIComponent(p.formName).replace(/%20/g, "+")}" target="_blank" rel="noopener">Order, cash on delivery</a>`;
+const formLink = (name) => FORM + encodeURIComponent(name).replace(/%20/g, "+");
+document.querySelectorAll("[data-action]").forEach((slot) => {
+  const p = PRODUCTS[slot.dataset.action];
+  if (!p) return;
+  const style = slot.dataset.style || "btn--ink";
+  if (p.status === "buy") {
+    slot.innerHTML = `<a class="btn ${style}" href="${formLink(p.formName)}" target="_blank" rel="noopener">Buy now</a><span class="stock">In stock, cash on delivery</span>`;
+  } else if (p.status === "preorder") {
+    slot.innerHTML = `<a class="btn ${style}" href="${formLink(p.formName)}" target="_blank" rel="noopener">Pre-order</a><span class="stock stock--out">Sold out, next batch on pre-order</span>`;
   } else {
-    slot.innerHTML = `<span class="stock stock--out">Sold out</span><a class="btn btn--ghost" href="${RESTOCK_URL}" target="_blank" rel="noopener">Ask about restock</a>`;
+    slot.innerHTML = `<span class="stock stock--out">Coming soon</span><a class="btn ${style}" href="${NOTIFY_URL}" target="_blank" rel="noopener">Get notified</a>`;
   }
+});
+
+document.querySelectorAll("[data-pill]").forEach((el) => {
+  const p = PRODUCTS[el.dataset.pill];
+  if (p) el.textContent = { buy: "In stock", preorder: "Pre-order", soon: "Soon" }[p.status];
 });
 
 /* ---- Nav ---- */
