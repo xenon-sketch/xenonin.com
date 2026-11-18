@@ -373,3 +373,41 @@ a { color: inherit; }
 .cover > div:first-child li::before { content: ""; position: absolute; left: 0; top: .5em; width: 12px; height: 12px; border-radius: 3px; background: #3BB273; }
 .cover > div:last-child li::before { content: ""; position: absolute; left: 2px; top: .75em; width: 10px; height: 2.5px; background: var(--orange); }
 @media (max-width: 960px) { .cover { grid-template-columns: 1fr; gap: 40px; } }
+
+/* skip link */
+.skip { position: absolute; left: -9999px; top: 12px; z-index: 99; background: var(--ink); color: var(--pla); padding: 12px 18px; border-radius: 999px; font-weight: 700; text-decoration: none; }
+.skip:focus { left: 12px; }
+
+/* about */
+.shelf--light { margin-top: 0; }
+.shelf--light .shelf__item:focus-visible { outline-color: var(--ink); }
+
+/* contact */
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: clamp(40px, 5vw, 64px); }
+.contact-card { display: flex; flex-direction: column; gap: 8px; padding: 26px; border-radius: 24px; background: #ECE9E4; color: var(--ink); text-decoration: none; min-height: 170px; transition: background-color .15s ease; }
+a.contact-card:hover { background: #E2DED7; }
+.contact-card--main { background: var(--ink); color: var(--pla); grid-row: span 2; justify-content: flex-end; }
+a.contact-card--main:hover { background: #2B2823; }
+.contact-card__label { font-weight: 700; font-size: 15px; opacity: .7; }
+.contact-card__value { font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.05; letter-spacing: -0.02em; overflow-wrap: break-word; }
+.contact-card--main .contact-card__value { font-size: clamp(30px, 3vw, 44px); white-space: nowrap; }
+.contact-card__value--sm { font-size: clamp(19px, 1.7vw, 24px); }
+.contact-card__note { font-size: 15px; opacity: .75; margin-top: auto; }
+.contact-card--main .contact-card__note { margin-top: 0; }
+
+/* legal */
+.legal { display: grid; gap: clamp(56px, 7vw, 96px); }
+.legal article { max-width: 46em; }
+.legal h2 { margin-bottom: 18px; }
+.legal h3 { font-size: 20px; margin: 32px 0 8px; }
+.legal p, .legal li { color: var(--ink-soft); }
+.legal ul { padding-left: 20px; margin: 8px 0; }
+
+@media (max-width: 960px) {
+  .contact-grid { grid-template-columns: 1fr 1fr; }
+  .contact-card--main { grid-column: 1 / -1; grid-row: auto; min-height: 200px; }
+}
+@media (max-width: 560px) { .contact-grid { grid-template-columns: 1fr; } .contact-card { min-height: 0; } }
+
+.contact-card--wide { grid-column: span 2; }
+@media (max-width: 560px) { .contact-card--wide { grid-column: auto; } }

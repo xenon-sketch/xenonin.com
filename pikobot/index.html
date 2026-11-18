@@ -8,15 +8,19 @@
 <meta name="theme-color" content="#FF5A1F" />
 <meta property="og:title" content="PikoBot, the tiny desk robot with big moods | Xenon Industries" />
 <meta property="og:description" content="PikoBot is a palm-sized desk robot. He pulls faces, shows short messages and runs your focus timer. ৳1,900, cash on delivery." />
-<meta property="og:image" content="https://www.xenonin.com/assets/web/hero-desk.webp" />
-<link rel="icon" type="image/png" href="../assets/Xenon%20Industries%20Logo.png" />
+<meta property="og:image" content="https://www.xenonin.com/assets/brand/og.jpg" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="../assets/brand/favicon.svg" />
+<link rel="apple-touch-icon" href="../assets/brand/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&amp;family=Silkscreen&amp;display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/site.css" />
 </head>
 <body>
-<a class="btn btn--ink" href="#main" style="position:absolute;left:-9999px" onfocus="this.style.left='12px';this.style.top='12px';this.style.zIndex=99" onblur="this.style.left='-9999px'">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a>
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">
@@ -33,15 +37,16 @@
 <header class="nav " id="nav" style="--nav-bg:var(--orange)">
   <div class="wrap nav__inner">
     <a class="nav__logo" href="../" aria-label="Xenon Industries home">
-      <img class="logo-white" src="../assets/web/logo-white.png" alt="Xenon Industries" width="1106" height="230" />
-      <img class="logo-ink" src="../assets/web/logo-ink.png" alt="" width="1106" height="230" />
+      <img class="logo-white" src="../assets/brand/logo-white.svg" alt="Xenon Industries" width="4424" height="920" />
+      <img class="logo-ink" src="../assets/brand/logo-ink.svg" alt="" width="4424" height="920" />
     </a>
     <ul class="nav__links" id="navLinks">
       <li><a href="../pikobot/" aria-current="page">PikoBot</a></li>
       <li><a href="../tofubot/">TofuBot</a></li>
       <li><a href="../zen-lamp/">Zen Lamp</a></li>
       <li><a href="../clock/">Clock</a></li>
-      <li><a href="../contact.html">Contact</a></li>
+      <li><a href="../about/">About</a></li>
+      <li><a href="../contact/">Contact</a></li>
     </ul>
     <a class="btn btn--ink nav__cta" href="../pikobot/#bots">Shop PikoBot</a>
     <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
@@ -172,7 +177,7 @@
         <a class="btn btn--ghost" href="https://youtube.com/@xenon.industries" target="_blank" rel="noopener">More on YouTube</a>
       </div>
       <div class="video-frame">
-        <iframe src="https://www.youtube.com/embed/6ndrZoAlMeg?mute=1&amp;loop=1&amp;playlist=6ndrZoAlMeg&amp;rel=0&amp;playsinline=1" title="PikoBot on a desk" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        <iframe src="https://www.youtube-nocookie.com/embed/6ndrZoAlMeg?mute=1&amp;loop=1&amp;playlist=6ndrZoAlMeg&amp;rel=0&amp;playsinline=1" title="PikoBot on a desk" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
       </div>
     </div>
   </section>
@@ -186,7 +191,7 @@
           <h2 class="display h2" style="font-size:clamp(40px,4.6vw,68px)">piko z is in the workshop</h2>
           <p style="margin-top:20px;color:#B9C2CC">The next Piko is coming. Here's what we can show so far.</p>
         </div>
-        <a class="btn btn--orange" href="../pico-z-detail.html">See Piko Z</a>
+        <a class="btn btn--orange" href="../piko-z/">See Piko Z</a>
       </article>
     </div>
   </section>
@@ -236,7 +241,7 @@
   <div class="wrap">
     <div class="footer__top">
       <div class="footer__brand">
-        <img src="../assets/web/logo-white.png" alt="Xenon Industries" width="1106" height="230" loading="lazy" />
+        <img src="../assets/brand/logo-white-red.svg" alt="Xenon Industries" width="4424" height="920" loading="lazy" />
         <p>Small gadgets for desk setups, designed and built in Bangladesh.</p>
       </div>
       <div>
@@ -253,8 +258,8 @@
         <ul>
           <li><a href="../warranty/">Warranty and support</a></li>
           <li><a href="https://wa.me/8801410975319" target="_blank" rel="noopener">WhatsApp support</a></li>
-          <li><a href="../contact.html">Contact</a></li>
-          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact/">Contact</a></li>
+          <li><a href="../about/">About</a></li>
           <li><a href="mailto:mail.xenon.in@gmail.com">mail.xenon.in@gmail.com</a></li>
         </ul>
       </div>
@@ -270,7 +275,7 @@
     <div class="display footer__big" aria-hidden="true">pikobot</div>
     <div class="footer__legal">
       <span>© <span id="year">2026</span> Xenon Industries, Bangladesh</span>
-      <a href="../privacy-policy.html">Privacy policy and terms</a>
+      <a href="../privacy/">Privacy policy and terms</a>
     </div>
   </div>
 </footer>
