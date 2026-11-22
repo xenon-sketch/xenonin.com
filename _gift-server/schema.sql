@@ -1,0 +1,10 @@
+-- TofuBot gift server (Cloudflare D1 "tofubot-gifts"). Safe to run again: it only creates what is missing.
+CREATE TABLE IF NOT EXISTS devices (code TEXT PRIMARY KEY, seen INTEGER NOT NULL, fw TEXT);
+CREATE TABLE IF NOT EXISTS items (
+  id TEXT PRIMARY KEY, code TEXT NOT NULL, kind TEXT NOT NULL, text TEXT, face INTEGER NOT NULL DEFAULT 6,
+  shows INTEGER NOT NULL, days INTEGER NOT NULL, created INTEGER NOT NULL, size INTEGER NOT NULL DEFAULT 0,
+  data BLOB, delivered INTEGER, expires INTEGER
+);
+CREATE INDEX IF NOT EXISTS items_code ON items (code, delivered);
+CREATE TABLE IF NOT EXISTS owners (code TEXT PRIMARY KEY, salt TEXT NOT NULL, hash TEXT NOT NULL, fails INTEGER NOT NULL DEFAULT 0, lock_until INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS daily (code TEXT PRIMARY KEY, ver INTEGER NOT NULL, n INTEGER NOT NULL, texts TEXT NOT NULL, blob BLOB NOT NULL, updated INTEGER NOT NULL);

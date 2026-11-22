@@ -1,0 +1,9 @@
+name = "tofubot-media"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "tofubot-gifts"
+database_id = "f288d114-ed93-4a5a-a5d2-8547b38ffb99"

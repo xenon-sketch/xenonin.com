@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Send to TofuBot | Xenon Industries</title>
+<meta name="description" content="Daily texts, little messages and photos for someone's TofuBot." />
+<meta name="theme-color" content="#F7F6F3" />
+<meta name="robots" content="noindex" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.workers.dev; form-action 'none'; base-uri 'self'; object-src 'none'" />
+<meta name="referrer" content="no-referrer" />
+<link rel="icon" href="../../favicon.ico" sizes="any" />
+<link rel="icon" type="image/svg+xml" href="../../assets/brand/favicon.svg" />
+<link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&amp;display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/site.css" />
+<style>
+  @font-face { font-family: "Hind Siliguri"; font-weight: 600; font-display: swap; src: url(fonts/hind-latin.woff2) format("woff2"); }
+  @font-face { font-family: "Hind Siliguri"; font-weight: 600; font-display: swap; src: url(fonts/hind-bengali.woff2) format("woff2"); unicode-range: U+0964-0965, U+0980-09FE, U+200C-200D, U+25CC; }
+  [hidden] { display: none !important; }
+  .gift { --card: #FFFFFF; --soft: #EFEDE8; --ok: #1F8A4C; --bad: #C8203A; padding-bottom: clamp(56px, 8vw, 110px); }
+  .gift__grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .gift__hero { padding-block: clamp(28px, 5vw, 64px) clamp(22px, 3vw, 36px); }
+  .gift__title { font-size: clamp(46px, 9vw, 120px); }
+  @media (min-width: 1000px) {
+    .gift__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 640px); gap: 56px; align-items: start; padding-top: 48px; }
+    .gift__hero { position: sticky; top: 120px; padding-block: 0; }
+    .gift__title { font-size: clamp(64px, 7vw, 112px); }
+  }
+  .gift__hero .lede { margin-top: 18px; }
+  .gift__col { max-width: 640px; display: flex; flex-direction: column; gap: 16px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: clamp(18px, 3vw, 28px); display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .panel h2 { margin: 0; font: 800 26px/1 var(--display); font-variation-settings: "wdth" 125; letter-spacing: -0.02em; text-transform: lowercase; }
+  .panel p { margin: 0; }
+  .sub { color: var(--ink-soft); font-size: 16px; }
+  .small { font-size: 14px; color: var(--ink-soft); }
+  .count { font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+  .field { width: 100%; min-width: 0; font: 500 18px/1.4 var(--body); color: var(--ink); background: var(--pla); border: 2px solid var(--line); border-radius: 16px; padding: 12px 14px; transition: border-color .15s ease; }
+  .field:focus { outline: none; border-color: var(--ink); }
+  .field.is-bad { border-color: var(--bad); }
+  textarea.field { resize: none; min-height: 56px; font-family: var(--body), "Hind Siliguri", sans-serif; }
+  .bn { font-family: var(--body), "Hind Siliguri", sans-serif; }
+  .code { font: 800 30px/1 var(--display); font-variation-settings: "wdth" 112; letter-spacing: .12em; text-align: center; text-transform: uppercase; padding: 16px; }
+  .pin { font: 800 30px/1 var(--display); letter-spacing: .5em; text-align: center; padding: 14px 14px 14px calc(14px + .5em); max-width: 220px; }
+  .pins { display: flex; gap: 12px; flex-wrap: wrap; }
+  .pins label { display: flex; flex-direction: column; gap: 6px; font-weight: 700; font-size: 14px; }
+  .msg { font-size: 15px; font-weight: 600; min-height: 22px; color: var(--ink-soft); }
+  .msg.ok { color: var(--ok); } .msg.bad { color: var(--bad); }
+  .msg:empty { display: none; }
+  .btn { cursor: pointer; }
+  .btn:disabled { opacity: .45; cursor: default; transform: none; }
+  .btn--small { padding: 11px 18px; font-size: 15px; }
+  .btn--soft { background: var(--soft); color: var(--ink); border-color: var(--soft); }
+  .btn--soft:hover { background: var(--ink); color: var(--pla); border-color: var(--ink); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .linkbtn { background: none; border: 0; padding: 0; font: 700 15px var(--body); color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .panel.bar { flex-direction: row; }
+  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 16px; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+  .chip b { font: 800 20px/1 var(--display); font-variation-settings: "wdth" 112; letter-spacing: .08em; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ok); flex: none; }
+  .dot--off { background: #B9B2A7; }
+  .times { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .times span { font-weight: 700; font-size: 15px; }
+  .seg { display: inline-flex; gap: 6px; }
+  .seg button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: var(--pla); font: 700 17px var(--body); color: var(--ink); cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--pla); }
+  .compose { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: start; }
+  .screen { width: 180px; aspect-ratio: 1; border-radius: 18px; background: #0A0A0A; padding: 10px; box-shadow: 0 0 0 6px #FFFFFF, 0 0 0 7px var(--line); margin: 7px; flex: none; }
+  .screen canvas, .screen img { display: block; width: 100%; height: 100%; image-rendering: pixelated; border-radius: 4px; }
+  .fit { font-size: 14px; font-weight: 700; color: var(--ink-soft); }
+  .fit.bad { color: var(--bad); }
+  .daily { display: flex; flex-direction: column; gap: 10px; }
+  .daily__row { display: grid; grid-template-columns: 28px minmax(0, 1fr) 40px; gap: 8px; align-items: start; }
+  .daily__row > span { font-weight: 700; font-size: 14px; color: var(--ink-soft); text-align: right; padding-top: 16px; font-variant-numeric: tabular-nums; }
+  .daily__row textarea.field { min-height: 52px; padding: 12px; font-size: 17px; }
+  .del { width: 40px; height: 40px; margin-top: 6px; border-radius: 50%; border: 0; background: var(--soft); color: var(--ink); font: 700 20px/1 var(--body); cursor: pointer; }
+  .del:hover { background: var(--ink); color: var(--pla); }
+  .editor { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: start; }
+  .editor .screen { position: sticky; top: 96px; }
+  .pick { display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 22px; border: 2px dashed var(--line); border-radius: 18px; cursor: pointer; font-weight: 700; background: var(--pla); }
+  .pick:hover { border-color: var(--ink); }
+  .pick input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .sent { display: flex; flex-direction: column; }
+  .sent__item { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); }
+  .sent__item:first-child { border-top: 0; padding-top: 0; }
+  .sent__ic { width: 40px; height: 40px; border-radius: 12px; background: var(--soft); display: grid; place-items: center; }
+  .sent__ic svg { width: 20px; height: 20px; }
+  .sent__item b { display: block; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sent__item small { font-size: 14px; color: var(--ink-soft); }
+  .sent__item small.on { color: var(--ok); font-weight: 700; }
+  @media (max-width: 560px) {
+    .compose, .editor { grid-template-columns: minmax(0, 1fr); }
+    .screen { width: 200px; justify-self: center; }
+    .editor .screen { position: static; order: -1; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav nav--light" id="nav" style="--nav-bg:#F7F6F3">
+  <div class="wrap nav__inner">
+    <a class="nav__logo" href="../../" aria-label="Xenon Industries home">
+      <img class="logo-white" src="../../assets/brand/logo-white.svg" alt="Xenon Industries" width="4424" height="920" />
+      <img class="logo-ink" src="../../assets/brand/logo-ink.svg" alt="" width="4424" height="920" />
+    </a>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="../../pikobot/">PikoBot</a></li>
+      <li><a href="../" aria-current="page">TofuBot</a></li>
+      <li><a href="../../zen-lamp/">Zen Lamp</a></li>
+      <li><a href="../../clock/">Clock</a></li>
+      <li><a href="../../about/">About</a></li>
+      <li><a href="../../contact/">Contact</a></li>
+    </ul>
+    <a class="btn btn--ink nav__cta" href="../../pikobot/#bots">Shop PikoBot</a>
+    <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+  </div>
+</header>
+
+<main id="main" class="gift">
+  <div class="wrap gift__grid">
+    <section class="gift__hero">
+      <h1 class="display gift__title">send to tofubot</h1>
+      <p class="lede">Daily texts, little messages and photos, straight to someone's desk.</p>
+    </section>
+
+    <div class="gift__col">
+      <noscript><div class="panel"><p>This page needs JavaScript.</p></div></noscript>
+
+      <!-- 1. which TofuBot -->
+      <section class="panel" id="stCode" aria-labelledby="hCode">
+        <h2 id="hCode">tofubot code</h2>
+        <input class="field code" id="code" maxlength="9" placeholder="XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="cm" />
+        <p class="msg" id="cm"></p>
+        <p class="small" id="codeHelp">On the TofuBot panel: Send to TofuBot, then Show code on screen.</p>
+      </section>
+
+      <!-- 2. PIN -->
+      <section class="panel" id="stPin" hidden aria-labelledby="hPin">
+        <h2 id="hPin">enter your pin</h2>
+        <p class="sub" id="pinSub"></p>
+        <div class="pins">
+          <label>PIN <input class="field pin" id="pin1" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" /></label>
+          <label id="pin2L" hidden>Again <input class="field pin" id="pin2" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" /></label>
+        </div>
+        <div class="actions"><button class="btn btn--ink" id="pinGo" disabled>Open</button><button class="linkbtn" id="pinBack">Other code</button></div>
+        <p class="msg" id="pm"></p>
+        <p class="small" id="forgot" hidden>Forgot it? <a href="https://wa.me/8801410975319" target="_blank" rel="noopener">Message us on WhatsApp</a> with the TofuBot code.</p>
+      </section>
+
+      <!-- 3. the gifter's space -->
+      <div id="stApp" hidden>
+        <div class="gift__col">
+          <div class="panel bar">
+            <span class="chip"><span class="dot" id="dot"></span><span><b id="codeShow"></b><br /><span class="small" id="seen"></span></span></span>
+            <button class="btn btn--soft btn--small" id="lock">Lock</button>
+          </div>
+
+          <section class="panel" aria-labelledby="hDaily">
+            <div class="panel__head"><h2 id="hDaily">daily texts</h2><span class="count" id="dCount"></span></div>
+            <p class="sub">TofuBot slips these in between its own thoughts, every day.</p>
+            <div id="dView" class="actions"><button class="btn btn--ink btn--small" id="dEdit">Edit</button></div>
+            <div id="dEditBox" hidden>
+              <div class="editor">
+                <div class="daily" id="dList"></div>
+                <div class="screen" aria-hidden="true"><canvas id="dPrev" width="240" height="240"></canvas></div>
+              </div>
+              <div class="actions" style="margin-top:14px">
+                <button class="btn btn--soft btn--small" id="dAdd">Add text</button>
+                <button class="btn btn--ink btn--small" id="dSave">Save</button>
+                <button class="linkbtn" id="dCancel">Cancel</button>
+              </div>
+            </div>
+            <p class="msg" id="dm"></p>
+          </section>
+
+          <section class="panel" aria-labelledby="hMsg">
+            <h2 id="hMsg">message</h2>
+            <p class="sub">Shown today with a little envelope, then it's gone.</p>
+            <div class="compose">
+              <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+                <textarea class="field" id="mText" rows="3" placeholder="English or বাংলা" aria-describedby="mFit"></textarea>
+                <span class="fit" id="mFit"></span>
+              </div>
+              <div class="screen" aria-hidden="true"><canvas id="mPrev" width="240" height="240"></canvas></div>
+            </div>
+            <div class="times"><span id="mTimesL">Times today</span><div class="seg" id="mTimes" role="group" aria-labelledby="mTimesL"></div></div>
+            <div class="actions"><button class="btn btn--ink" id="mSend" disabled>Send message</button></div>
+            <p class="msg" id="mm"></p>
+          </section>
+
+          <section class="panel" aria-labelledby="hPic">
+            <h2 id="hPic">picture</h2>
+            <p class="sub">A photo or GIF, 20 seconds at a time, today.</p>
+            <div class="compose">
+              <label class="pick" id="pickL"><input type="file" id="file" accept="image/*" /><span id="pickT">Choose a photo or GIF</span></label>
+              <div class="screen" id="picScreen" hidden><img id="pv" alt="Picture preview" /></div>
+            </div>
+            <p class="small" id="pInfo"></p>
+            <div class="times"><span id="pTimesL">Times today</span><div class="seg" id="pTimes" role="group" aria-labelledby="pTimesL"></div></div>
+            <div class="actions"><button class="btn btn--ink" id="pSend" disabled>Send picture</button></div>
+            <p class="msg" id="pmsg"></p>
+          </section>
+
+          <section class="panel" aria-labelledby="hSent">
+            <h2 id="hSent">sent</h2>
+            <div class="sent" id="sent"></div>
+            <p class="small">TofuBot checks for new things every 30 minutes.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="../../assets/brand/logo-white-red.svg" alt="Xenon Industries" width="4424" height="920" loading="lazy" />
+        <p>Small gadgets for desk setups, designed and built in Bangladesh.</p>
+      </div>
+      <div>
+        <h3>Products</h3>
+        <ul>
+          <li><a href="../../pikobot/">PikoBot</a></li>
+          <li><a href="../">TofuBot</a></li>
+          <li><a href="../../zen-lamp/">Zen Lamp</a></li>
+          <li><a href="../../clock/">Clock</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Help</h3>
+        <ul>
+          <li><a href="../../warranty/">Warranty and support</a></li>
+          <li><a href="https://wa.me/8801410975319" target="_blank" rel="noopener">WhatsApp support</a></li>
+          <li><a href="../../contact/">Contact</a></li>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="mailto:mail.xenon.in@gmail.com">mail.xenon.in@gmail.com</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/xenon.industries" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.facebook.com/share/1K1A88vVYV/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://youtube.com/@xenon.industries" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="display footer__big" aria-hidden="true">tofubot</div>
+    <div class="footer__legal">
+      <span>© <span id="year">2026</span> Xenon Industries, Bangladesh</span>
+      <a href="../../privacy/">Privacy policy and terms</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../../js/site.js" defer></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
