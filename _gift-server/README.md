@@ -18,7 +18,7 @@ You can also run it by hand: Actions → TofuBot gift server → Run workflow.
 
 ## Who can do what
 
-- **A TofuBot** uses only its own 8-character code. It checks every 30 minutes.
+- **A TofuBot** uses only its own 8-character code. It checks every 10 minutes.
 - **The gifter** opens the page with that code and sets a 4-digit PIN on the first visit. Every change needs the PIN.
 - **Wrong PINs:** five wrong tries lock the code for 15 minutes. Each further wrong try doubles the lock, up to one day.
 

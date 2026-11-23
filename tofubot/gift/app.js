@@ -337,7 +337,7 @@ $('dSave').onclick = async () => {
   if (!j.ok) { say('dm', j.error, 'bad'); return; }
   closeDaily();
   me.daily = j.n; $('dCount').textContent = j.n + ' / ' + MAX_DAILY;
-  say('dm', j.n ? 'Saved. TofuBot gets them within 30 minutes.' : 'Saved. No daily texts now.', 'ok');
+  say('dm', j.n ? 'Saved. TofuBot gets them within about 10 minutes.' : 'Saved. No daily texts now.', 'ok');
 };
 
 // ---- a message for today
@@ -358,7 +358,7 @@ $('mSend').onclick = async () => {
     : await call('/v1/send/' + code + '?kind=t&shows=' + mShows, { method: 'POST', headers: { 'content-type': 'text/plain' }, body: p.clean });
   if (!j.ok) { say('mm', j.error, 'bad'); $('mSend').disabled = false; return; }
   $('mText').value = ''; mUpdate();
-  say('mm', 'Sent. TofuBot picks it up within 30 minutes.', 'ok'); refresh();
+  say('mm', 'Sent. TofuBot picks it up within about 10 minutes.', 'ok'); refresh();
 };
 
 // ---- a picture for today (turned into a 240x240 GIF here)
@@ -409,7 +409,7 @@ $('pSend').onclick = async () => {
   const j = await call('/v1/send/' + code + '?kind=g&shows=' + pShows, { method: 'POST', headers: { 'content-type': 'image/gif' }, body: gif });
   if (!j.ok) { say('pmsg', j.error, 'bad'); $('pSend').disabled = false; return; }
   gif = null; $('file').value = ''; $('picScreen').hidden = true; $('pickT').textContent = 'Choose a photo or GIF'; $('pInfo').textContent = '';
-  say('pmsg', 'Sent. TofuBot picks it up within 30 minutes.', 'ok'); refresh();
+  say('pmsg', 'Sent. TofuBot picks it up within about 10 minutes.', 'ok'); refresh();
 };
 
 // ---------------------------------------------------------------- go
