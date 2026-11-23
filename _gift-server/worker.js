@@ -1,7 +1,7 @@
 // TofuBot gift server: Cloudflare Worker + D1 database (binding name DB). Deployed by .github/workflows/gift-server.yml.
 //
 // Bots (the 8-character code is the bot's own key):
-//   GET  /v1/d/<code>?f=<firmware>     what is waiting. Plain text:
+//   GET  /v1/d/<code>?f=<firmware>&c=<chip id>   what is waiting. Plain text ("tofu 1" then "x" = this code belongs to another chip: make a new one):
 //                                       "tofu 1"
 //                                       "i <id> <t|b|g> <shows> <expires unix> <bytes> <face> [text]"   one line per gift (max 3)
 //                                       "l <version> <bytes> <count>"                                  the gifter's daily texts
@@ -96,7 +96,12 @@ export default {
 
     // ---------- bots
     if (op === 'd') {
-      const fw = (u.searchParams.get('f') || '').slice(0, 24);
+      const fw = (u.searchParams.get('f') || '').slice(0, 24), chip = (u.searchParams.get('c') || '').slice(0, 12);
+      if (/^[0-9a-f]{1,12}$/.test(chip)) {   // duplicate-code guard (0.7.19+): a code belongs to the first chip that used it
+        await db.prepare('INSERT INTO chips (code, chip) VALUES (?, ?) ON CONFLICT(code) DO NOTHING').bind(code, chip).run();
+        const c = await db.prepare('SELECT chip FROM chips WHERE code = ?').bind(code).first();
+        if (c && c.chip !== chip) return text('tofu 1\nx\n');   // another TofuBot already has this code: the bot makes a new one
+      }
       await db.prepare('INSERT INTO devices (code, seen, fw) VALUES (?, ?, ?) ON CONFLICT(code) DO UPDATE SET seen = excluded.seen, fw = excluded.fw WHERE devices.seen < excluded.seen - 600').bind(code, t, fw).run();
       const r = await db.prepare('SELECT id, kind, shows, days, size, face, text FROM items WHERE code = ? AND delivered IS NULL ORDER BY created LIMIT ?').bind(code, MAX_WAITING).all();
       let out = 'tofu 1\n';
