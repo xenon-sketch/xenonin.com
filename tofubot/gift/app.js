@@ -189,14 +189,31 @@ async function check(c) {
   if (!j.ok) { say('cm', 'No TofuBot with this code has been online yet. Check the code, and keep TofuBot on Wi-Fi for a few minutes.', 'bad'); return; }
   code = c; pin = ''; say('cm', '');
   history.replaceState(null, '', '#' + c);
-  showPin(!j.pin, j.lock);
+  showPin(!j.pin, j.lock, j.ready);
 }
 
 // ---------------------------------------------------------------- 2. the PIN
-let pinNew = false;
-function showPin(isNew, lock) {
-  pinNew = isNew;
+let pinNew = false, waitTimer = 0;
+// A new PIN can only be set while the code is on TofuBot's screen (and 10 minutes after): whoever has the TofuBot in front of them.
+async function recheck() {
+  const j = await call('/v1/check/' + code);
+  if ($('stPin').hidden) return;
+  if (j.ok && j.pin) showPin(false, j.lock, 0);
+  else if (j.ok && j.ready) showPin(true, 0, j.ready);
+  else waitTimer = setTimeout(recheck, 4000);
+}
+function showPin(isNew, lock, ready) {
+  pinNew = isNew; clearTimeout(waitTimer);
   $('stCode').hidden = true; $('stPin').hidden = false; $('stApp').hidden = true;
+  const wait = isNew && !ready;
+  $('pinForm').hidden = wait; $('pinGo').hidden = wait;
+  if (wait) {
+    $('hPin').textContent = 'set a pin'; $('forgot').hidden = true;
+    $('pinSub').textContent = 'TofuBot ' + fmtCode(code) + ' has no PIN yet. To set one, show its code on its screen: TofuBot panel, Send to TofuBot, Show code on screen.';
+    say('pm', 'Waiting for TofuBot…');
+    waitTimer = setTimeout(recheck, 4000);
+    return;
+  }
   $('hPin').textContent = isNew ? 'set a pin' : 'enter your pin';
   $('pinSub').textContent = isNew
     ? 'TofuBot ' + fmtCode(code) + ' is all yours. Pick 4 digits, so only you can send to it and see your daily texts.'
@@ -216,7 +233,7 @@ for (const id of ['pin1', 'pin2']) {
   });
 }
 $('pinGo').onclick = pinGo;
-$('pinBack').onclick = () => { forget(); code = pin = ''; $('stPin').hidden = true; $('stCode').hidden = false; $('code').value = ''; history.replaceState(null, '', location.pathname); $('code').focus(); };
+$('pinBack').onclick = () => { clearTimeout(waitTimer); forget(); code = pin = ''; $('stPin').hidden = true; $('stCode').hidden = false; $('code').value = ''; history.replaceState(null, '', location.pathname); $('code').focus(); };
 async function pinGo() {
   if (busy) return;
   const a = $('pin1').value, b = $('pin2').value;
@@ -224,7 +241,7 @@ async function pinGo() {
   busy = true; $('pinGo').disabled = true; say('pm', pinNew ? 'Saving…' : 'Opening…');
   if (pinNew) {
     const j = await call('/v1/pin/' + code, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pin: a }) });
-    if (!j.ok) { busy = false; if (j.status === 409) { showPin(false, 0); say('pm', 'Someone already set a PIN for this TofuBot.', 'bad'); } else say('pm', j.error, 'bad'); return; }
+    if (!j.ok) { busy = false; if (j.status === 409) { showPin(false, 0, 0); say('pm', 'Someone already set a PIN for this TofuBot.', 'bad'); } else if (j.show) showPin(true, 0, 0); else say('pm', j.error, 'bad'); return; }
   }
   pin = a; busy = false;
   if (!(await login(false))) { pin = ''; $('pin1').value = ''; $('pin1').focus(); }
@@ -248,7 +265,7 @@ async function login(quiet) {
 }
 $('lock').onclick = () => {
   forget(); pin = ''; me = null; closeDaily();
-  $('stApp').hidden = true; showPin(false, 0);
+  $('stApp').hidden = true; showPin(false, 0, 0);
 };
 
 // ---------------------------------------------------------------- 3. the gifter's space

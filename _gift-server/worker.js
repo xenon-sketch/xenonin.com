@@ -1,7 +1,9 @@
 // TofuBot gift server: Cloudflare Worker + D1 database (binding name DB). Deployed by .github/workflows/gift-server.yml.
 //
 // Bots (the 8-character code is the bot's own key):
-//   GET  /v1/d/<code>?f=<firmware>&c=<chip id>   what is waiting. Plain text ("tofu 1" then "x" = this code belongs to another chip: make a new one):
+//   Bots send their secret key (&k=, 16 chars, kept only on the bot) with every request; once a code has a key, nothing about it
+//   is answered without that key (so knowing the code is not enough to read the daily texts or take gifts).
+//   GET  /v1/d/<code>?f=<firmware>&c=<chip id>&k=<key>[&s=1]   what is waiting (s=1: the code is on the bot's screen right now). Plain text ("tofu 1" then "x" = this code belongs to another chip: make a new one):
 //                                       "tofu 1"
 //                                       "i <id> <t|b|g> <shows> <expires unix> <bytes> <face> [text]"   one line per gift (max 3)
 //                                       "l <version> <bytes> <count>"                                  the gifter's daily texts
@@ -10,7 +12,8 @@
 //   GET  /v1/l/<code>                  the daily texts as one file (see below)
 // Gifter page (xenonin.com/tofubot/gift). Everything except check and pin needs the header  x-pin: <4 digits>
 //   GET  /v1/check/<code>              {ok, ago, pin, lock}: has this TofuBot been online, is a PIN set
-//   POST /v1/pin/<code>                {"pin":"1234"}: the first visit sets the PIN (only while none is set)
+//   POST /v1/pin/<code>                {"pin":"1234"}: the first visit sets the PIN (only while none is set, and only within
+//                                      10 minutes after the code was shown on that TofuBot's screen)
 //   GET  /v1/me/<code>                 PIN check + overview: daily text count, sent gifts and their status
 //   GET  /v1/daily/<code>              the daily texts (only for Edit)
 //   POST /v1/daily/<code>              {"items":[{"t":"text"} | {"t":"text","b":"<base64 text picture>"}]}: replaces the list (max 20)
@@ -24,7 +27,7 @@
 // Daily file: 'T','D', version (u32 LE), count, then per text: kind ('t' or 'b'), length (u16 LE), the text or the text picture.
 // A gift's day starts when it reaches the bot, so a TofuBot that was offline does not lose it.
 
-const CODE = /^[2-9A-HJKMNP-Z]{8}$/, ID = /^[a-z0-9]{10}$/;
+const CODE = /^[2-9A-HJKMNP-Z]{8}$/, ID = /^[a-z0-9]{10}$/, KEY = /^[a-z0-9]{16}$/, CLAIM_WINDOW = 600, MAX_BODY = 1048576;
 const MAX_WAITING = 3, MAX_GIF = 700000, MAX_TEXT = 90, MAX_PIC = 8192, MAX_DAILY = 20, SHOWS = { t: 5, b: 5, g: 4 };
 const now = () => Math.floor(Date.now() / 1000);
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'content-type,x-pin', 'access-control-max-age': '86400' };
@@ -54,6 +57,7 @@ function unb64(s) {
   catch (e) { return null; }
 }
 function newId() { const a = 'abcdefghijklmnopqrstuvwxyz0123456789', r = crypto.getRandomValues(new Uint8Array(10)); return Array.from(r, x => a[x % 36]).join(''); }
+async function sha(s) { const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return Array.from(new Uint8Array(d), x => x.toString(16).padStart(2, '0')).join(''); }
 async function hashPin(salt, pin) {
   const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('tofubot:' + salt + ':' + pin));
   return Array.from(new Uint8Array(d), x => x.toString(16).padStart(2, '0')).join('');
@@ -93,15 +97,33 @@ export default {
     if (p[0] !== 'v1') return text('TofuBot gift server');
     const op = p[1], code = normCode(p[2]), id = p[3] || '', t = now(), bot = ['d', 'm', 'a', 'l'].includes(op);
     if (!CODE.test(code)) return bot ? text('bad code', 400) : json({ ok: 0, error: 'That code does not look right' }, 400);
+    if (req.method === 'POST' && +(req.headers.get('content-length') || 0) > MAX_BODY) return json({ ok: 0, error: 'Too big' }, 413);
+
+    // ---------- bot check: the key (0.7.21+), else the chip id (0.7.19/0.7.20)
+    if (bot) {
+      const key = u.searchParams.get('k') || '', chip = (u.searchParams.get('c') || '').slice(0, 12);
+      const kr = await db.prepare('SELECT khash FROM botkeys WHERE code = ?').bind(code).first();
+      if (kr) {
+        if (!KEY.test(key) || await sha('tofubot-key:' + key) !== kr.khash) return op === 'd' ? text('tofu 1\nx\n') : text('not found', 404);
+      } else if (op === 'd') {
+        if (/^[0-9a-f]{1,12}$/.test(chip)) {   // a code belongs to the first chip that used it
+          await db.prepare('INSERT INTO chips (code, chip) VALUES (?, ?) ON CONFLICT(code) DO NOTHING').bind(code, chip).run();
+          const c = await db.prepare('SELECT chip FROM chips WHERE code = ?').bind(code).first();
+          if (c && c.chip !== chip) return text('tofu 1\nx\n');   // another TofuBot already has this code: the bot makes a new one
+        }
+        if (KEY.test(key)) {   // first check with a key: from now on only this key works for this code
+          const h = await sha('tofubot-key:' + key);
+          await db.prepare('INSERT INTO botkeys (code, khash) VALUES (?, ?) ON CONFLICT(code) DO NOTHING').bind(code, h).run();
+          const k2 = await db.prepare('SELECT khash FROM botkeys WHERE code = ?').bind(code).first();
+          if (!k2 || k2.khash !== h) return text('tofu 1\nx\n');
+        }
+      }
+    }
 
     // ---------- bots
     if (op === 'd') {
-      const fw = (u.searchParams.get('f') || '').slice(0, 24), chip = (u.searchParams.get('c') || '').slice(0, 12);
-      if (/^[0-9a-f]{1,12}$/.test(chip)) {   // duplicate-code guard (0.7.19+): a code belongs to the first chip that used it
-        await db.prepare('INSERT INTO chips (code, chip) VALUES (?, ?) ON CONFLICT(code) DO NOTHING').bind(code, chip).run();
-        const c = await db.prepare('SELECT chip FROM chips WHERE code = ?').bind(code).first();
-        if (c && c.chip !== chip) return text('tofu 1\nx\n');   // another TofuBot already has this code: the bot makes a new one
-      }
+      const fw = (u.searchParams.get('f') || '').slice(0, 24);
+      if (u.searchParams.get('s') === '1' && KEY.test(u.searchParams.get('k') || '')) await db.prepare('INSERT INTO shown (code, at) VALUES (?, ?) ON CONFLICT(code) DO UPDATE SET at = excluded.at').bind(code, t).run();
       await db.prepare('INSERT INTO devices (code, seen, fw) VALUES (?, ?, ?) ON CONFLICT(code) DO UPDATE SET seen = excluded.seen, fw = excluded.fw WHERE devices.seen < excluded.seen - 600').bind(code, t, fw).run();
       const r = await db.prepare('SELECT id, kind, shows, days, size, face, text FROM items WHERE code = ? AND delivered IS NULL ORDER BY created LIMIT ?').bind(code, MAX_WAITING).all();
       let out = 'tofu 1\n';
@@ -131,13 +153,16 @@ export default {
       const d = await db.prepare('SELECT seen FROM devices WHERE code = ?').bind(code).first();
       if (!d) return json({ ok: 0 });
       const o = await db.prepare('SELECT lock_until FROM owners WHERE code = ?').bind(code).first();
-      return json({ ok: 1, ago: Math.max(0, t - d.seen), pin: o ? 1 : 0, lock: o && o.lock_until > t ? o.lock_until - t : 0 });
+      const s = o ? null : await db.prepare('SELECT at FROM shown WHERE code = ?').bind(code).first();
+      return json({ ok: 1, ago: Math.max(0, t - d.seen), pin: o ? 1 : 0, lock: o && o.lock_until > t ? o.lock_until - t : 0, ready: s && t - s.at <= CLAIM_WINDOW ? CLAIM_WINDOW - (t - s.at) : 0 });
     }
     if (op === 'pin' && req.method === 'POST') {
       const d = await db.prepare('SELECT seen FROM devices WHERE code = ?').bind(code).first();
       if (!d) return json({ ok: 0, error: 'This TofuBot has not been online yet' }, 404);
       const pin = String(((await req.json().catch(() => ({}))) || {}).pin || '');
       if (!/^\d{4}$/.test(pin)) return json({ ok: 0, error: 'The PIN is 4 digits' }, 400);
+      const s = await db.prepare('SELECT at FROM shown WHERE code = ?').bind(code).first();   // only someone with the TofuBot in front of them
+      if (!s || t - s.at > CLAIM_WINDOW) return json({ ok: 0, show: 1, error: 'Show the code on TofuBot\'s screen first' }, 403);
       const salt = newId(), r = await db.prepare('INSERT INTO owners (code, salt, hash, fails, lock_until, created) VALUES (?, ?, ?, 0, 0, ?) ON CONFLICT(code) DO NOTHING').bind(code, salt, await hashPin(salt, pin), t).run();
       return r.meta.changes ? json({ ok: 1 }) : json({ ok: 0, error: 'A PIN is already set for this TofuBot' }, 409);
     }
