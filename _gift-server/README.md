@@ -12,7 +12,7 @@ A change pushed to this folder runs `.github/workflows/gift-server.yml`. That wo
 3. Deploys `worker.js` as the Worker `tofubot-media`.
 4. Writes the Worker address into `tofubot/gift/api.txt`. The gift page and every TofuBot read the address from that file.
 
-It needs the repository secret `CLOUDFLARE_API_TOKEN`. Make it from the "Edit Cloudflare Workers" token template, with **Account > D1 > Edit** added.
+It needs the repository secret `CLOUDFLARE_API_TOKEN` (added 2026-11-23). Make it from the "Edit Cloudflare Workers" token template, with **Account > D1 > Edit** added.
 
 You can also run it by hand: Actions → TofuBot gift server → Run workflow.
 
