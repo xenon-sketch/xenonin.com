@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_gift-server/
+
+Sitemap: https://xenonin.com/sitemap.xml
