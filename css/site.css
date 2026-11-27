@@ -154,7 +154,7 @@ a { color: inherit; }
 .hero__buy { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
 .price { font-family: var(--display); font-variation-settings: "wdth" 125; font-weight: 800; font-size: 34px; letter-spacing: -0.02em; }
 .price small { display: block; font: 600 14px var(--body); letter-spacing: 0; opacity: .75; }
-.hero__photo { border-radius: 28px; overflow: hidden; aspect-ratio: 2 / 1; background: #b9441a; }
+.hero__photo { border-radius: 28px; overflow: hidden; aspect-ratio: 1234 / 415; background: #b9441a; }
 .hero__photo img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- sections ---------- */
@@ -429,55 +429,3 @@ a.contact-card--main:hover { background: #2B2823; }
   .story { grid-template-columns: 1fr; }
   .team { grid-template-columns: repeat(2, 1fr); }
 }
-
-/* ---------- pikobot page: facts, faces, gestures, specs, gallery ---------- */
-.facts { background: var(--ink); color: var(--pla); padding: 26px 0; }
-.facts__row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-.facts__row div { display: grid; gap: 4px; padding-left: 16px; border-left: 2px solid var(--orange); }
-.facts__row strong { font-family: var(--display); font-variation-settings: "wdth" 112; font-weight: 800; font-size: 22px; line-height: 1.1; }
-.facts__row span { font-size: 14px; color: #BDB7AE; line-height: 1.35; }
-
-.faces { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
-.faces img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; background: #000; box-shadow: 0 0 0 1px #2E2A25; }
-.says { margin-top: clamp(40px, 5vw, 64px); overflow: hidden; white-space: nowrap; }
-.says__track { display: inline-flex; gap: 12px; animation: tick 60s linear infinite; }
-.says span { font-family: var(--pixel); font-size: 15px; color: var(--oled); background: #000; border: 1px solid #2E2A25; padding: 12px 16px 11px; border-radius: 10px; text-shadow: 0 0 6px rgba(234,243,255,.45); }
-
-.gestures { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.gestures > div { background: #ECE9E4; border-radius: 22px; padding: 24px; display: grid; align-content: start; gap: 14px; }
-.gesture { justify-self: start; background: var(--ink); color: var(--pla); font-weight: 700; font-size: 15px; padding: 8px 14px; border-radius: 999px; }
-.gestures p { margin: 0; color: var(--ink-soft); }
-
-.specs-wrap { background: #ECE9E4; }
-.specs { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
-.spec-list { margin: clamp(28px, 4vw, 44px) 0 0; border-top: 2px solid var(--ink); }
-.spec-list div { display: grid; grid-template-columns: 200px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid #CFC9BF; }
-.spec-list dt { font-weight: 700; }
-.spec-list dd { margin: 0; color: var(--ink-soft); }
-.box { background: var(--pla); border-radius: 28px; overflow: hidden; }
-.box__img { aspect-ratio: 4 / 3; overflow: hidden; }
-.box__img img { width: 100%; height: 100%; object-fit: cover; }
-.box h3 { margin: 24px 26px 10px; font-size: 22px; }
-.box ul { margin: 0 26px 26px; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-soft); }
-
-.gallery { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; aspect-ratio: 16 / 9; }
-.gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
-.gallery__tall { grid-row: 1 / span 2; }
-
-@media (max-width: 960px) {
-  .facts__row { grid-template-columns: repeat(2, 1fr); }
-  .facts__row div:last-child { grid-column: 1 / -1; }
-  .faces { grid-template-columns: repeat(4, 1fr); }
-  .gestures { grid-template-columns: 1fr 1fr; }
-  .specs { grid-template-columns: 1fr; }
-  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; aspect-ratio: auto; }
-  .gallery img { aspect-ratio: 4 / 3; height: auto; }
-  .gallery__tall { grid-row: auto; grid-column: 1 / -1; aspect-ratio: 4 / 3; }
-}
-@media (max-width: 560px) {
-  .faces { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .gestures { grid-template-columns: 1fr; }
-  .spec-list div { grid-template-columns: 1fr; gap: 2px; }
-  .gallery { grid-template-columns: 1fr; }
-}
-@media (prefers-reduced-motion: reduce) { .says__track { animation: none; } }
