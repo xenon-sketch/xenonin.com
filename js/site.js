@@ -101,3 +101,23 @@ if (pupils.length && !reduce) {
 
 const y = document.getElementById("year");
 if (y) y.textContent = new Date().getFullYear();
+
+/* ---- Reels: play with sound, chapter buttons ---- */
+const startReel = (video, from) => {
+  if (!video) return;
+  document.querySelectorAll(".reel__video").forEach((v) => { if (v !== video) v.pause(); });
+  if (typeof from === "number") video.currentTime = from;
+  video.muted = false;
+  video.play().catch(() => {});
+};
+document.querySelectorAll("[data-play]").forEach((btn) =>
+  btn.addEventListener("click", () => startReel(document.getElementById(btn.dataset.play)))
+);
+document.querySelectorAll(".reel__video").forEach((v) => {
+  const wrap = v.closest(".reel");
+  v.addEventListener("play", () => wrap.classList.add("is-playing"));
+  v.addEventListener("ended", () => wrap.classList.remove("is-playing"));
+});
+document.querySelectorAll("[data-seek]").forEach((btn) =>
+  btn.addEventListener("click", () => startReel(document.getElementById(btn.dataset.target), Number(btn.dataset.seek)))
+);
