@@ -28,7 +28,7 @@
 // A gift's day starts when it reaches the bot, so a TofuBot that was offline does not lose it.
 
 const CODE = /^[2-9A-HJKMNP-Z]{8}$/, ID = /^[a-z0-9]{10}$/, KEY = /^[a-z0-9]{16}$/, CLAIM_WINDOW = 600, MAX_BODY = 1048576;
-const MAX_WAITING = 3, MAX_GIF = 700000, MAX_TEXT = 90, MAX_PIC = 8192, MAX_DAILY = 20, SHOWS = { t: 5, b: 5, g: 4 };
+const MAX_WAITING = 3, MAX_GIF = 700000, MAX_TEXT = 90, MAX_PIC = 8192, MAX_DAILY = 20, SHOWS = { t: 20, b: 20, g: 20 };
 const now = () => Math.floor(Date.now() / 1000);
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'content-type,x-pin', 'access-control-max-age': '86400' };
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...CORS } });

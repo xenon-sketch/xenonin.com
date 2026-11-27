@@ -32,14 +32,15 @@ async function call(path, opt = {}) {
   j.status = r.status;
   return j;
 }
-function seg(el, max, cur, set) {
+function stepper(el, max, cur, set) {   // [-] N [+], 1..max
   el.innerHTML = '';
-  for (let i = 1; i <= max; i++) {
-    const b = document.createElement('button');
-    b.type = 'button'; b.textContent = i; b.setAttribute('aria-pressed', String(i === cur));
-    b.onclick = () => { set(i); el.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); };
-    el.appendChild(b);
-  }
+  const mk = (t, l) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.setAttribute('aria-label', l); el.appendChild(b); return b; };
+  const dn = mk('\u2212', 'Fewer times'), n = document.createElement('output'), up = mk('+', 'More times');
+  el.insertBefore(n, up); n.setAttribute('aria-live', 'polite');
+  const show = () => { n.textContent = cur; dn.disabled = cur <= 1; up.disabled = cur >= max; set(cur); };
+  dn.onclick = () => { if (cur > 1) { cur--; show(); } };
+  up.onclick = () => { if (cur < max) { cur++; show(); } };
+  show();
 }
 function grow(t) { t.style.height = 'auto'; t.style.height = t.scrollHeight + 4 + 'px'; }
 
@@ -430,7 +431,7 @@ $('pSend').onclick = async () => {
 };
 
 // ---------------------------------------------------------------- go
-seg($('mTimes'), 5, mShows, (v) => { mShows = v; });
-seg($('pTimes'), 4, pShows, (v) => { pShows = v; });
+stepper($('mTimes'), 20, mShows, (v) => { mShows = v; });
+stepper($('pTimes'), 20, pShows, (v) => { pShows = v; });
 face.onload = () => { screen($('mPrev'), prep($('mText').value)); if (dFocus) showDaily(dFocus); };
 document.fonts.load(FONT, 'অA').catch(() => {}).finally(() => { mUpdate(); start(); });
