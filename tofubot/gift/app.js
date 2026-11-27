@@ -279,6 +279,12 @@ function render() {
   $('dot').className = 'dot' + (on ? '' : ' dot--off');
   $('seen').textContent = me.ago < 0 ? '' : on ? 'Online ' + ago(me.ago) : 'Last online ' + ago(me.ago) + '. Gifts wait until it is back.';
   $('dCount').textContent = me.daily + ' / ' + MAX_DAILY;
+  if (me.left) {   // today's sends: up to 10 messages and 3 photos
+    const L = me.limits || { t: 10, g: 3 }, lt = (n) => n ? n + ' left today' : 'none left today, more tomorrow';
+    $('mLim').textContent = 'Up to ' + L.t + ' messages a day · ' + lt(me.left.t);
+    $('pLim').textContent = 'Up to ' + L.g + ' photos a day · ' + lt(me.left.g);
+    mUpdate(); if (gif) $('pSend').disabled = me.left.g <= 0;
+  }
   const el = $('sent'); el.innerHTML = '';
   if (!me.items.length) { el.innerHTML = '<p class="small">Nothing yet.</p>'; return; }
   for (const it of me.items) {
@@ -367,7 +373,7 @@ function mUpdate() {
   screen($('mPrev'), p);
   $('mFit').textContent = p.empty ? '' : p.ok ? 'Fits' : p.err; $('mFit').className = 'fit' + (p.ok || p.empty ? '' : ' bad');
   $('mText').classList.toggle('is-bad', !p.ok && !p.empty);
-  $('mSend').disabled = !p.ok;
+  $('mSend').disabled = !p.ok || !!(me && me.left && me.left.t <= 0);
   return p;
 }
 $('mText').addEventListener('input', () => { mUpdate(); say('mm', ''); });
@@ -377,7 +383,7 @@ $('mSend').onclick = async () => {
   const j = p.kind === 'b'
     ? await call('/v1/send/' + code + '?kind=b&shows=' + mShows, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ t: $('mText').value.trim(), b: b64(withN(p)) }) })
     : await call('/v1/send/' + code + '?kind=t&shows=' + mShows, { method: 'POST', headers: { 'content-type': 'text/plain' }, body: p.clean });
-  if (!j.ok) { say('mm', j.error, 'bad'); $('mSend').disabled = false; return; }
+  if (!j.ok) { say('mm', j.error, 'bad'); $('mSend').disabled = false; if (j.limit) refresh(); return; }
   $('mText').value = ''; mUpdate();
   say('mm', 'Sent. TofuBot picks it up within 30 minutes.', 'ok'); refresh();
 };
@@ -419,7 +425,7 @@ $('file').onchange = async () => {
     $('pv').src = URL.createObjectURL(new Blob([bytes], { type: 'image/gif' })); $('picScreen').hidden = false;
     $('pickT').textContent = 'Choose another';
     $('pInfo').textContent = (frames.length > 1 ? 'GIF, ' + frames.length + ' frames' : 'Photo') + ' · ' + Math.max(1, Math.round(bytes.length / 1024)) + ' KB';
-    $('pSend').disabled = false;
+    $('pSend').disabled = !!(me && me.left && me.left.g <= 0);
   } catch (e) {
     $('pInfo').textContent = ''; say('pmsg', e.message && e.message.length > 12 ? e.message : 'This file could not be opened. Try a JPG, PNG or GIF.', 'bad');
   }
@@ -428,7 +434,7 @@ $('pSend').onclick = async () => {
   if (!gif) return;
   $('pSend').disabled = true; say('pmsg', 'Sending…');
   const j = await call('/v1/send/' + code + '?kind=g&shows=' + pShows, { method: 'POST', headers: { 'content-type': 'image/gif' }, body: gif });
-  if (!j.ok) { say('pmsg', j.error, 'bad'); $('pSend').disabled = false; return; }
+  if (!j.ok) { say('pmsg', j.error, 'bad'); $('pSend').disabled = false; if (j.limit) refresh(); return; }
   gif = null; $('file').value = ''; $('picScreen').hidden = true; $('pickT').textContent = 'Choose a photo or GIF'; $('pInfo').textContent = '';
   say('pmsg', 'Sent. TofuBot picks it up within 30 minutes.', 'ok'); refresh();
 };

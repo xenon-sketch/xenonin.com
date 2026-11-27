@@ -17,7 +17,7 @@
 //   GET  /v1/me/<code>                 PIN check + overview: daily text count, sent gifts and their status
 //   GET  /v1/daily/<code>              the daily texts (only for Edit)
 //   POST /v1/daily/<code>              {"items":[{"t":"text"} | {"t":"text","b":"<base64 text picture>"}]}: replaces the list (max 20)
-//   POST /v1/send/<code>?kind=t|b|g&shows=N
+//   POST /v1/send/<code>?kind=t|b|g&shows=N  (at most 10 messages, t or b, and 3 photos, g, per day; 429 + limit when reached)
 //                                      t: body = English text. b: body = {"t":text,"b":base64 text picture}. g: body = a GIF.
 //   POST /v1/del/<code>/<id>           take back a gift that has not reached the bot yet
 //
@@ -29,6 +29,9 @@
 
 const CODE = /^[2-9A-HJKMNP-Z]{8}$/, ID = /^[a-z0-9]{10}$/, KEY = /^[a-z0-9]{16}$/, CLAIM_WINDOW = 600, MAX_BODY = 1048576;
 const MAX_WAITING = 3, MAX_GIF = 700000, MAX_TEXT = 90, MAX_PIC = 8192, MAX_DAILY = 20, SHOWS = { t: 20, b: 20, g: 20 };
+// Sends per TofuBot per day (the day turns at midnight Bangladesh time): messages (English or Bangla) and photos.
+const LIMITS = { t: 10, g: 3 };
+const today = () => Math.floor((now() + 6 * 3600) / 86400);
 const now = () => Math.floor(Date.now() / 1000);
 const CORS = { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'content-type,x-pin', 'access-control-max-age': '86400' };
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { 'content-type': 'application/json', 'cache-control': 'no-store', ...CORS } });
@@ -79,7 +82,18 @@ async function hashPin(salt, pin) {
 async function tidy(db, code) {   // finished gifts go a day after their last day; never-delivered ones after 14 days
   const t = now();
   await db.prepare('DELETE FROM items WHERE code = ? AND ((delivered IS NOT NULL AND expires < ?) OR (delivered IS NULL AND created < ?))').bind(code, t - 86400, t - 14 * 86400).run();
+  await db.prepare('DELETE FROM sends WHERE code = ? AND day < ?').bind(code, today() - 1).run();
 }
+async function leftToday(db, code) {   // what this TofuBot can still be sent today
+  const r = await db.prepare('SELECT t, g FROM sends WHERE code = ? AND day = ?').bind(code, today()).first();
+  return { t: Math.max(0, LIMITS.t - (r ? r.t : 0)), g: Math.max(0, LIMITS.g - (r ? r.g : 0)) };
+}
+async function takeSend(db, code, col) {   // counts one send ('t' message or 'g' photo); false = today's limit is reached. Taking a gift back does not give it back.
+  const r = await db.prepare(`INSERT INTO sends (code, day, t, g) VALUES (?, ?, ?, ?) ON CONFLICT(code, day) DO UPDATE SET ${col} = ${col} + 1 WHERE ${col} < ? RETURNING ${col} AS n`)
+    .bind(code, today(), col === 't' ? 1 : 0, col === 'g' ? 1 : 0, LIMITS[col]).first();
+  return !!r;
+}
+const LIMIT_MSG = { t: 'You have sent 10 messages today. You can send more tomorrow.', g: 'You have sent 3 photos today. You can send more tomorrow.' };
 // PIN check. 5 wrong tries lock the code for 15 min, each further wrong try doubles the lock (max a day).
 async function auth(db, code, req) {
   const pin = req.headers.get('x-pin') || '', t = now();
@@ -189,7 +203,7 @@ export default {
       const d = await db.prepare('SELECT seen FROM devices WHERE code = ?').bind(code).first();
       const l = await db.prepare('SELECT n FROM daily WHERE code = ?').bind(code).first();
       const r = await db.prepare('SELECT id, kind, text, shows, created, delivered, expires FROM items WHERE code = ? ORDER BY created DESC LIMIT 20').bind(code).all();
-      return json({ ok: 1, now: t, ago: d ? Math.max(0, t - d.seen) : -1, daily: l ? l.n : 0, items: r.results });
+      return json({ ok: 1, now: t, ago: d ? Math.max(0, t - d.seen) : -1, daily: l ? l.n : 0, items: r.results, left: await leftToday(db, code), limits: LIMITS });
     }
     if (op === 'daily' && req.method === 'GET') {
       const d = await db.prepare('SELECT texts FROM daily WHERE code = ?').bind(code).first();
@@ -231,17 +245,20 @@ export default {
       if (kind === 't') {
         const note = cleanNote(await req.text());
         if (!note || note.length > MAX_TEXT) return json({ ok: 0, error: note ? 'Too long' : 'Write a message' }, 400);
+        if (!(await takeSend(db, code, 't'))) return json({ ok: 0, limit: 't', error: LIMIT_MSG.t }, 429);
         await db.prepare("INSERT INTO items (id, code, kind, text, face, shows, days, created) VALUES (?, ?, 't', ?, 6, ?, 1, ?)").bind(gid, code, note, shows, t).run();
         return json({ ok: 1, id: gid });
       }
       if (kind === 'b') {
         const body = await req.json().catch(() => null), pic = body && unb64(body.b), raw = String((body && body.t) || '').trim().slice(0, 300);
         if (!checkPic(pic)) return json({ ok: 0, error: 'The message could not be prepared' }, 400);
+        if (!(await takeSend(db, code, 't'))) return json({ ok: 0, limit: 't', error: LIMIT_MSG.t }, 429);
         await db.prepare("INSERT INTO items (id, code, kind, text, face, shows, days, created, size, data) VALUES (?, ?, 'b', ?, 6, ?, 1, ?, ?, ?)").bind(gid, code, raw, shows, t, pic.length, pic).run();
         return json({ ok: 1, id: gid });
       }
       const b = new Uint8Array(await req.arrayBuffer());
       if (b.length < 20 || b.length > MAX_GIF || String.fromCharCode(b[0], b[1], b[2], b[3]) !== 'GIF8') return json({ ok: 0, error: 'The picture must be a GIF under 700 KB' }, 400);
+      if (!(await takeSend(db, code, 'g'))) return json({ ok: 0, limit: 'g', error: LIMIT_MSG.g }, 429);
       await db.prepare("INSERT INTO items (id, code, kind, face, shows, days, created, size, data) VALUES (?, ?, 'g', 6, ?, 1, ?, ?, ?)").bind(gid, code, shows, t, b.length, b).run();
       return json({ ok: 1, id: gid });
     }
