@@ -503,7 +503,7 @@ a.contact-card--main:hover { background: #2B2823; }
   .h2 { font-size: clamp(30px, 9.5vw, 40px); }
   .h3 { font-size: 20px; }
   .lede, .hero__copy p, .home-hero__sub, .soon p { font-size: 15px; }
-  .footer__big { font-size: 22vw; margin-top: 40px; }
+  .footer__big { font-size: 17vw; margin-top: 40px; overflow: hidden; }
 
   /* spacing */
   .section { padding: 52px 0; }
