@@ -7,6 +7,7 @@ import { MED } from './fontmed.js';
 
 const $ = (id) => document.getElementById(id);
 const AB = '23456789ABCDEFGHJKMNPQRSTUVWXYZ', MAXW = 190, BN_PITCH = 31, MAX_DAILY = 20, MAX_GIF = 700000, S = 240;
+let proof = '';   // the 8-letter proof from the QR on TofuBot's screen (#CODE.PROOF): lets the first PIN be set without waiting
 let API = '', code = '', pin = '', me = null, mShows = 4, pShows = 3, gif = null, busy = false;
 
 // ---------------------------------------------------------------- small helpers
@@ -169,7 +170,8 @@ async function start() {
     say('cm', 'Sending to TofuBot is being set up. Please try again a little later.', 'bad'); $('code').disabled = true; return;
   }
   let s = {}; try { s = JSON.parse(sessionStorage.getItem('tofugift') || '{}'); } catch (e) { /* ignore */ }
-  const fromLink = cleanCode(decodeURIComponent(location.hash.slice(1)));
+  const raw = decodeURIComponent(location.hash.slice(1)).toUpperCase().replace(/[^0-9A-Z]/g, '');
+  const fromLink = raw.slice(0, 8); if (raw.length === 16) proof = raw.slice(8);
   const c = fromLink.length === 8 ? fromLink : (s.c || '');
   if (c.length === 8) {
     $('code').value = fmtCode(c);
@@ -178,6 +180,7 @@ async function start() {
   }
 }
 $('code').addEventListener('input', () => {
+  proof = '';   // a typed code has no proof
   const ci = $('code'), c = cleanCode(ci.value);
   ci.value = c.length > 4 ? fmtCode(c) : c;
   if (c.length === 8) check(c); else say('cm', '');
@@ -185,7 +188,7 @@ $('code').addEventListener('input', () => {
 async function check(c) {
   if ([...c].some((ch) => !AB.includes(ch))) { say('cm', 'TofuBot codes never use 0, 1, I, L or O. Check the code again.', 'bad'); return; }
   say('cm', 'Looking for this TofuBot…');
-  const j = await call('/v1/check/' + c);
+  const j = await call('/v1/check/' + c + (proof ? '?t=' + proof : ''));
   if (j.status === 0) { say('cm', j.error, 'bad'); return; }
   if (!j.ok) { say('cm', 'No TofuBot with this code has been online yet. Check the code, and keep TofuBot on Wi-Fi for a few minutes.', 'bad'); return; }
   code = c; pin = ''; say('cm', '');
@@ -197,7 +200,7 @@ async function check(c) {
 let pinNew = false, waitTimer = 0;
 // A new PIN can only be set while the code is on TofuBot's screen (and 10 minutes after): whoever has the TofuBot in front of them.
 async function recheck() {
-  const j = await call('/v1/check/' + code);
+  const j = await call('/v1/check/' + code + (proof ? '?t=' + proof : ''));
   if ($('stPin').hidden) return;
   if (j.ok && j.pin) showPin(false, j.lock, 0);
   else if (j.ok && j.ready) showPin(true, 0, j.ready);
@@ -241,7 +244,7 @@ async function pinGo() {
   if (pinNew && a !== b) { say('pm', 'The two PINs are different. Type them again.', 'bad'); $('pin2').value = ''; $('pin2').focus(); return; }
   busy = true; $('pinGo').disabled = true; say('pm', pinNew ? 'Saving…' : 'Opening…');
   if (pinNew) {
-    const j = await call('/v1/pin/' + code, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pin: a }) });
+    const j = await call('/v1/pin/' + code, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pin: a, t: proof }) });
     if (!j.ok) { busy = false; if (j.status === 409) { showPin(false, 0, 0); say('pm', 'Someone already set a PIN for this TofuBot.', 'bad'); } else if (j.show) showPin(true, 0, 0); else say('pm', j.error, 'bad'); return; }
   }
   pin = a; busy = false;

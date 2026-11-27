@@ -11,7 +11,7 @@
 //   GET  /v1/a/<code>/<id>             "I have it": delivered. The file is then deleted here.
 //   GET  /v1/l/<code>                  the daily texts as one file (see below)
 // Gifter page (xenonin.com/tofubot/gift). Everything except check and pin needs the header  x-pin: <4 digits>
-//   GET  /v1/check/<code>              {ok, ago, pin, lock}: has this TofuBot been online, is a PIN set
+//   GET  /v1/check/<code>[?t=proof]    {ok, ago, pin, lock, ready}: has this TofuBot been online, is a PIN set, can one be set now
 //   POST /v1/pin/<code>                {"pin":"1234"}: the first visit sets the PIN (only while none is set, and only within
 //                                      10 minutes after the code was shown on that TofuBot's screen)
 //   GET  /v1/me/<code>                 PIN check + overview: daily text count, sent gifts and their status
@@ -58,6 +58,20 @@ function unb64(s) {
 }
 function newId() { const a = 'abcdefghijklmnopqrstuvwxyz0123456789', r = crypto.getRandomValues(new Uint8Array(10)); return Array.from(r, x => a[x % 36]).join(''); }
 async function sha(s) { const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return Array.from(new Uint8Array(d), x => x.toString(16).padStart(2, '0')).join(''); }
+// PIN proof from the QR on TofuBot's screen (firmware 0.7.25+): 8 letters from SHA-256("tofubot-claim:" + khash + ":" + slot),
+// slot = unix time / 600. Only the bot (it has the key) and this server (it has khash) can make it. Accepts the slots around now.
+const AB = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
+async function proofOk(db, code, proof) {
+  if (!/^[2-9A-HJKMNP-Z]{8}$/.test(proof || '')) return false;
+  const kr = await db.prepare('SELECT khash FROM botkeys WHERE code = ?').bind(code).first();
+  if (!kr) return false;
+  const slot = Math.floor(now() / 600);
+  for (const s of [slot, slot - 1, slot + 1, slot - 2]) {
+    const d = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('tofubot-claim:' + kr.khash + ':' + s)));
+    if (Array.from(d.slice(0, 8), x => AB[x % 31]).join('') === proof) return true;
+  }
+  return false;
+}
 async function hashPin(salt, pin) {
   const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('tofubot:' + salt + ':' + pin));
   return Array.from(new Uint8Array(d), x => x.toString(16).padStart(2, '0')).join('');
@@ -154,15 +168,17 @@ export default {
       if (!d) return json({ ok: 0 });
       const o = await db.prepare('SELECT lock_until FROM owners WHERE code = ?').bind(code).first();
       const s = o ? null : await db.prepare('SELECT at FROM shown WHERE code = ?').bind(code).first();
-      return json({ ok: 1, ago: Math.max(0, t - d.seen), pin: o ? 1 : 0, lock: o && o.lock_until > t ? o.lock_until - t : 0, ready: s && t - s.at <= CLAIM_WINDOW ? CLAIM_WINDOW - (t - s.at) : 0 });
+      let ready = s && t - s.at <= CLAIM_WINDOW ? CLAIM_WINDOW - (t - s.at) : 0;
+      if (!o && !ready && await proofOk(db, code, u.searchParams.get('t'))) ready = CLAIM_WINDOW;   // scanned from the screen just now
+      return json({ ok: 1, ago: Math.max(0, t - d.seen), pin: o ? 1 : 0, lock: o && o.lock_until > t ? o.lock_until - t : 0, ready });
     }
     if (op === 'pin' && req.method === 'POST') {
       const d = await db.prepare('SELECT seen FROM devices WHERE code = ?').bind(code).first();
       if (!d) return json({ ok: 0, error: 'This TofuBot has not been online yet' }, 404);
-      const pin = String(((await req.json().catch(() => ({}))) || {}).pin || '');
+      const pb = (await req.json().catch(() => ({}))) || {}, pin = String(pb.pin || '');
       if (!/^\d{4}$/.test(pin)) return json({ ok: 0, error: 'The PIN is 4 digits' }, 400);
       const s = await db.prepare('SELECT at FROM shown WHERE code = ?').bind(code).first();   // only someone with the TofuBot in front of them
-      if (!s || t - s.at > CLAIM_WINDOW) return json({ ok: 0, show: 1, error: 'Show the code on TofuBot\'s screen first' }, 403);
+      if ((!s || t - s.at > CLAIM_WINDOW) && !(await proofOk(db, code, String(pb.t || '')))) return json({ ok: 0, show: 1, error: 'Show the code on TofuBot\'s screen first' }, 403);
       const salt = newId(), r = await db.prepare('INSERT INTO owners (code, salt, hash, fails, lock_until, created) VALUES (?, ?, ?, 0, 0, ?) ON CONFLICT(code) DO NOTHING').bind(code, salt, await hashPin(salt, pin), t).run();
       return r.meta.changes ? json({ ok: 1 }) : json({ ok: 0, error: 'A PIN is already set for this TofuBot' }, 409);
     }
