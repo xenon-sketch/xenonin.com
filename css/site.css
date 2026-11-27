@@ -451,9 +451,9 @@ a.contact-card--main:hover { background: #2B2823; }
   background: var(--orange); color: var(--ink); box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
 .reel__play span { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); position: relative; }
-.reel__play span::after { content: ""; position: absolute; left: 10px; top: 7px; border-left: 9px solid var(--orange); border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+.reel__play span::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FF5A1F'%3E%3Cpath d='M4 9h4l5-4v14l-5-4H4z'/%3E%3Cpath d='M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12' fill='none' stroke='%23FF5A1F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 16px no-repeat; }
 .reel__play:hover { background: var(--pla); }
-.reel.is-playing .reel__play { display: none; }
+.reel__play[hidden] { display: none; }
 .reel-copy .lede { margin: 20px 0 26px; }
 .chapters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
 .chapter { display: inline-flex; align-items: center; gap: 10px; font: 600 15px var(--body); color: var(--pla); background: #2B2823; border: 1px solid #3A3630; border-radius: 999px; padding: 9px 16px 9px 10px; cursor: pointer; }

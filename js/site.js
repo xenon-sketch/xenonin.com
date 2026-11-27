@@ -102,22 +102,46 @@ if (pupils.length && !reduce) {
 const y = document.getElementById("year");
 if (y) y.textContent = new Date().getFullYear();
 
-/* ---- Reels: play with sound, chapter buttons ---- */
+/* ---- Reels: muted autoplay in view, tap for sound, chapter buttons ---- */
+const reels = [...document.querySelectorAll(".reel__video")];
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const userStarted = new WeakSet();   // videos the visitor started or unmuted themselves
+
+const setSoundState = (video) => {
+  const btn = document.querySelector(`[data-play="${video.id}"]`);
+  if (btn) btn.hidden = !video.muted;
+};
 const startReel = (video, from) => {
   if (!video) return;
-  document.querySelectorAll(".reel__video").forEach((v) => { if (v !== video) v.pause(); });
+  reels.forEach((v) => { if (v !== video) { v.pause(); v.muted = true; setSoundState(v); } });
   if (typeof from === "number") video.currentTime = from;
   video.muted = false;
+  userStarted.add(video);
   video.play().catch(() => {});
+  setSoundState(video);
 };
 document.querySelectorAll("[data-play]").forEach((btn) =>
   btn.addEventListener("click", () => startReel(document.getElementById(btn.dataset.play)))
 );
-document.querySelectorAll(".reel__video").forEach((v) => {
-  const wrap = v.closest(".reel");
-  v.addEventListener("play", () => wrap.classList.add("is-playing"));
-  v.addEventListener("ended", () => wrap.classList.remove("is-playing"));
-});
 document.querySelectorAll("[data-seek]").forEach((btn) =>
   btn.addEventListener("click", () => startReel(document.getElementById(btn.dataset.target), Number(btn.dataset.seek)))
 );
+reels.forEach((v) => {
+  v.muted = true;
+  v.loop = true;
+  v.addEventListener("volumechange", () => { if (!v.muted) userStarted.add(v); setSoundState(v); });
+});
+
+// play muted while on screen, pause when scrolled away
+if (!reduceMotion && "IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(({ target: v, isIntersecting }) => {
+      if (isIntersecting) {
+        if (v.paused && (v.muted || !userStarted.has(v))) v.play().catch(() => {});
+      } else if (!v.paused) {
+        v.pause();
+      }
+    });
+  }, { threshold: 0.5 });
+  reels.forEach((v) => io.observe(v));
+}
