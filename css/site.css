@@ -477,3 +477,129 @@ a.contact-card--main:hover { background: #2B2823; }
   .feats { grid-template-columns: 1fr; }
   .checklist { grid-template-columns: 1fr; }
 }
+
+/* =========================================================
+   Phone layout (≤ 600px): smaller type, tighter spacing,
+   product visible on the first screen
+   ========================================================= */
+@media (max-width: 600px) {
+  :root { --gut: 18px; }
+  body { font-size: 15px; line-height: 1.5; }
+
+  /* chrome */
+  .ticker { font-size: 12px; padding: 7px 0; }
+  .ticker__track span { padding: 0 18px; }
+  .nav__inner { height: 58px; }
+  .nav__logo img { height: 22px; }
+  .nav__toggle { font-size: 15px; padding: 8px 0 8px 8px; }
+  .nav.is-open .nav__links { top: 58px; }
+  .nav.is-open .nav__links a { font-size: 17px; padding: 10px 0; }
+
+  /* type scale */
+  .hero__title { font-size: clamp(44px, 14vw, 58px); }
+  .home-hero__title { font-size: clamp(40px, 12.5vw, 52px); }
+  .soon__title { font-size: clamp(42px, 13vw, 56px); }
+  .promise__title { font-size: clamp(40px, 12.5vw, 52px); }
+  .h2 { font-size: clamp(30px, 9.5vw, 40px); }
+  .h3 { font-size: 20px; }
+  .lede, .hero__copy p, .home-hero__sub, .soon p { font-size: 15px; }
+  .footer__big { font-size: 22vw; margin-top: 40px; }
+
+  /* spacing */
+  .section { padding: 52px 0; }
+  .section__head { margin-bottom: 26px; gap: 12px; }
+  .hero { padding: 18px 0 32px; }
+  .soon { min-height: 0; padding: 28px 0 44px; }
+  .home-hero__sub { margin-top: 14px; }
+
+  /* buttons */
+  .btn { font-size: 15px; padding: 13px 20px; }
+  .price { font-size: 26px; }
+  .price small { font-size: 12px; }
+  .stock { font-size: 13px; }
+
+  /* pikobot hero: photo straight under the title */
+  .hero__grid { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; }
+  .hero__photo { order: -1; aspect-ratio: 16 / 10; border-radius: 18px; }
+  .hero__copy p { margin-bottom: 16px; }
+  .hero__buy { gap: 10px 14px; }
+
+  /* home shelf */
+  .shelf { margin-top: 24px; gap: 10px; }
+  .shelf__item--photo { min-height: 0; aspect-ratio: 5 / 4; }
+  .shelf__name { font-size: 20px; }
+  .shelf__item:not(.shelf__item--photo) { padding: 10px 14px 10px 10px; }
+  .shelf__item:not(.shelf__item--photo) .shelf__art { flex-basis: 56px; }
+  .shelf__item:not(.shelf__item--photo) .shelf__art svg { width: 56px; }
+  .feature { gap: 22px; }
+  .feature__img { border-radius: 18px; }
+  .feature .lede { margin: 14px 0 20px; }
+
+  /* pikobot features: 2 per row */
+  .feats { grid-template-columns: 1fr 1fr; gap: 18px 12px; }
+  .feat__img { border-radius: 14px; }
+  .feat figcaption { padding-top: 10px; }
+  .feat .h3 { font-size: 16px; line-height: 1.1; }
+  .feat figcaption p { font-size: 13px; line-height: 1.4; margin-top: 5px; }
+
+  /* reels */
+  .reel { max-width: 290px; border-radius: 22px; }
+  .reel__play { font-size: 14px; padding: 11px 16px 11px 12px; }
+  .reel-layout { gap: 26px; }
+  .reel-copy .lede { margin: 12px 0 16px; }
+  .chapters { gap: 7px; margin-bottom: 20px; }
+  .chapter { font-size: 13px; padding: 6px 12px 6px 7px; }
+  .chapter span { font-size: 10px; }
+  .checklist { margin-top: 14px; gap: 0; }
+  .checklist li { padding: 9px 0 9px 30px; font-size: 14px; }
+  .checklist li::before { top: 10px; width: 18px; height: 18px; }
+  .addons-title { margin-top: 22px; font-size: 17px; }
+
+  /* lineup cards */
+  .lineup { gap: 12px; }
+  .bot { border-radius: 20px; }
+  .bot--hero .bot__img { aspect-ratio: 4 / 3; }
+  .bot__img { aspect-ratio: 16 / 9; }
+  .bot__body { padding: 16px; }
+  .bot__price { font-size: 18px; }
+  .bot__body p { font-size: 14px; }
+  .bot__action { margin-top: 12px; }
+
+  /* promise strip, faq, story, team */
+  .promise__grid { margin-top: 28px; }
+  .promise__grid h3 { font-size: 17px; }
+  .promise__grid p { font-size: 14px; }
+  .faq { gap: 22px; }
+  .faq__list summary { font-size: 16px; padding: 16px 0; }
+  .faq__list summary::after { width: 28px; height: 28px; border-radius: 8px; background-size: 15px; }
+  .faq__list details p { font-size: 14px; margin-bottom: 18px; }
+  .story__text p { font-size: 15px; margin-top: 14px; }
+  .timeline li { font-size: 15px; padding-bottom: 22px; }
+  .timeline__when { font-size: 26px; }
+  .team { gap: 16px 12px; }
+  .person strong { font-size: 15px; }
+  .person span { font-size: 13px; }
+
+  /* contact, warranty, legal */
+  .contact-grid { margin-top: 24px; gap: 10px; }
+  .contact-card { padding: 18px; border-radius: 18px; }
+  .contact-card--main { min-height: 150px; }
+  .contact-card--main .contact-card__value { font-size: 30px; }
+  .contact-card__value { font-size: 20px; }
+  .contact-card__value--sm { font-size: 17px; }
+  .order-steps li::before { font-size: 34px; margin-bottom: 8px; }
+  .order-steps h3, .cover h3 { font-size: 17px; }
+  .order-steps p, .cover li { font-size: 14px; }
+  .legal h3 { font-size: 17px; margin-top: 24px; }
+  .legal p, .legal li { font-size: 14px; }
+  .soon__art { border-radius: 22px; max-width: 300px; }
+  .soon__grid { gap: 26px; }
+
+  /* footer */
+  .footer { padding: 48px 0 24px; }
+  .footer__top { gap: 26px 20px; }
+  .footer__brand img { width: 170px; margin-bottom: 14px; }
+  .footer__brand p, .footer ul a { font-size: 14px; }
+  .footer h3 { font-size: 13px; margin-bottom: 10px; }
+  .footer__legal { font-size: 12px; margin-top: 16px; }
+}
