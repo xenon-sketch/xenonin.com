@@ -22,7 +22,7 @@ document.querySelectorAll("[data-action]").forEach((slot) => {
   if (p.status === "buy") {
     slot.innerHTML = `<a class="btn ${style}" href="${p.formUrl}" target="_blank" rel="noopener">Buy now</a><span class="stock">In stock, cash on delivery</span>`;
   } else if (p.status === "preorder") {
-    slot.innerHTML = `<a class="btn ${style}" href="${p.formUrl}" target="_blank" rel="noopener">Pre-order</a><span class="stock stock--out">Pre-order now, delivered in 10–15 days</span>`;
+    slot.innerHTML = `<a class="btn ${style}" href="${p.formUrl}" target="_blank" rel="noopener">Pre-order</a><span class="stock stock--out">Pre-order now, delivered in 15–20 days</span>`;
   } else {
     slot.innerHTML = `<span class="stock stock--out">Coming soon</span><a class="btn ${style}" href="${NOTIFY_URL}" target="_blank" rel="noopener">Get notified</a>`;
   }
